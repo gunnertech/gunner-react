@@ -1,6 +1,6 @@
 {
   "name": "gunner-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shared Components, Hooks, Contexts, Utils and more, common across Gunner's React and React Native projects",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -27,8 +27,8 @@
     "@react-navigation/native": "^5.5.1",
     "@expo/react-native-action-sheet": "^3.4.0",
     "graphql": "^14.0.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-ga": "^2.7.0",
     "aws-appsync": "^3.0.3",
     "aws-appsync-subscription-link": "^2.1.0",
@@ -37,16 +37,16 @@
     "expo": "37.0.8",
     "expo-font": "^8.1.1",
     "expo-analytics": "^1.0.15",
-    "react-native-safe-area-context": "^3.0.2",
     "expo-constants": "^9.0.0",
     "react-native-appearance": "^0.3.4",
-    "sentry-expo": "~2.0.0",
+    "sentry-expo": "2.0.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
     "@sentry/browser": "^5.16.1",
     "@material-ui/core": "^4.10.1",
     "@material-ui/pickers": "^3.2.10",
     "@date-io/moment": "^2.6.0",
-    "apollo-client": "^2.6.10"
+    "apollo-client": "^2.6.10",
+    "react-native-safe-area-context": "0.7.3"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,8 +63,6 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.1.0",
-    "babel-plugin-source-map-support": "^2.1.1",
-    "source-map-support": "^0.5.19",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"

@@ -3,7 +3,7 @@ import { FlatList, View, Text } from 'react-native'
 import uniqByProp from '../../../../Util/uniqByProp';
 
 
-export default ({objects, loading, onRefresh, onEndReached, RenderComponent, viewVariables, clientFilter = item => !!item}, clientSort = (a,b) => 1) =>
+export default ({objects, loading, onRefresh, onEndReached, RenderComponent, viewVariables, clientFilter = item => !!item, clientSort}) =>
   <FlatList
     keyboardShouldPersistTaps="handled"
     ListEmptyComponent={
@@ -16,7 +16,7 @@ export default ({objects, loading, onRefresh, onEndReached, RenderComponent, vie
     onRefresh={onRefresh}
     keyExtractor={item => item.id}
     data={
-      objects.filter(uniqByProp('id')).slice().sort(clientSort).filter(clientFilter)
+      objects.filter(uniqByProp('id')).slice().sort(clientSort ?? undefined).filter(clientFilter)
     }
     onEndReached={onEndReached}
     renderItem={({item}) => 

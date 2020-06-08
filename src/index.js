@@ -10,15 +10,7 @@ export useAppSyncClient from "./Hooks/useAppSyncClient"
 
 export uniqByProp from "./Util/uniqByProp"
 
-export useTrackerReact from "./React/Hooks/useTracker"
-
-export ReactDataList from "./React/Components/Data/List"
-export ReactDataListView from "./React/Components/Data/List/DataListView"
-
-export ReactApp from "./React/App"
-
-
 export { 
   CurrentUserContext,
-  CognitUserContext
+  CognitUserContext,
 }

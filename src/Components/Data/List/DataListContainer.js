@@ -23,7 +23,7 @@ export default ({
   viewVariables,
   
   clientFilter = item => !!item,
-  clientSort = (a,b) => 1,
+  clientSort,
   prependedObjects = [],
   DataListView
 }) => {
@@ -49,7 +49,6 @@ export default ({
     ], 
     [JSON.stringify([...prependedObjects, ...objects])]
   )
-
 
   return useMemo(() =>
     <DataListView

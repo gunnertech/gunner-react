@@ -5,7 +5,7 @@ import DataListContainer from '../../../../Components/Data/List';
 
 
 
-export default props => 
+export default props =>
   <DataListContainer
    DataListView={DataListView}
    {...props}

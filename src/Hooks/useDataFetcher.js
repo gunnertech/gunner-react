@@ -31,16 +31,11 @@ export default ({
     variables
   });
 
-
-  console.log("ITEMS LENGTH", items?.length, dumbLoading)
-
   const loading = !!dumbLoading && !items;
 
 
   const entry = useSubscription(subscriptionCreateMutation, {
     skip: !subscriptionCreateMutation,
-    fetchPolicy: "no-cache",
-    shouldResubscribe: true,
     variables: subscriptionCreateVariables
   })
   const newObject = null; //entry?.data?.[subscriptionCreateDataKey];
@@ -50,8 +45,6 @@ export default ({
 
   const updateEntry = useSubscription(subscriptionUpdateMutation, {
     skip: !subscriptionUpdateMutation,
-    fetchPolicy: "no-cache",
-    shouldResubscribe: true,
     variables: subscriptionUpdateVariables
   })
   const updatedObject = updateEntry?.data?.[subscriptionUpdateDataKey];
@@ -112,7 +105,7 @@ export default ({
   , [nextToken])
 
   useInterval(() => 
-    handleRefresh(items.length)
+    handleRefresh(items.length + 1)
   , 5000);
 
   // useEffect(() => {

@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client'
 
 export default ({objectId, object, query, dataKey}) => {
 
+  // console.log(objectId, !!object)
+
   const {data} = useQuery(query, {
     skip: !!object,
     pollInterval: !object ? 3000 : 0,
@@ -11,5 +13,5 @@ export default ({objectId, object, query, dataKey}) => {
     }
   });
 
-  return useMemo(() => object ?? data?.[dataKey], [JSON.stringify(object??data?.[dataKey])])
+  return useMemo(() => object ?? data?.[dataKey], [JSON.stringify(object ?? data?.[dataKey])])
 }

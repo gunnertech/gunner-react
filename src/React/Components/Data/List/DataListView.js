@@ -4,7 +4,7 @@ import uniqByProp from '../../../../Util/uniqByProp';
 // import { useEffect } from 'react'
 
 
-export default ({loading, hasMoreItems, objects, onEndReached, RenderComponent, viewVariables, clientFilter = item => !!item, clientSort = (a,b) => 1}) => {
+export default ({loading, hasMoreItems, objects, onEndReached, RenderComponent, viewVariables, clientFilter = item => !!item, clientSort}) => {
   // const handleEndReached = () => {
   //   if ((window.innerHeight + window.scrollY - 50) >= document.body.offsetHeight) {
   //     console.log("you're at the bottom of the page", !!hasMoreItems);
