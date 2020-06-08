@@ -1,6 +1,6 @@
 {
   "name": "gunner-react",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shared Components, Hooks, Contexts, Utils and more, common across Gunner's React and React Native projects",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -62,10 +62,7 @@
     "@babel/plugin-transform-react-jsx": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
-    "babel-loader": "^8.1.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "babel-loader": "^8.1.0"
   },
   "dependencies": {
     "flatlist-react": "^1.4.2"
