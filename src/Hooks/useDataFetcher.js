@@ -21,12 +21,10 @@ export default ({
   dataKey,
   skip,
 }) => {
-  if(!!skip) {
-    return {}
-  };
   
   // const client = useApolloClient();
   const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
+    skip: !!skip,
     // pollInterval: 5000,
     variables
   });
@@ -35,7 +33,7 @@ export default ({
 
 
   const entry = useSubscription(subscriptionCreateMutation, {
-    skip: !subscriptionCreateMutation,
+    skip: !subscriptionCreateMutation || !!skip,
     variables: subscriptionCreateVariables
   })
   const newObject = null; //entry?.data?.[subscriptionCreateDataKey];
@@ -44,7 +42,7 @@ export default ({
   // console.log("ENTRY", entry)
 
   const updateEntry = useSubscription(subscriptionUpdateMutation, {
-    skip: !subscriptionUpdateMutation,
+    skip: !subscriptionUpdateMutation || !!skip,
     variables: subscriptionUpdateVariables
   })
   const updatedObject = updateEntry?.data?.[subscriptionUpdateDataKey];
@@ -148,5 +146,5 @@ export default ({
   // console.log(loading)
 
 
-  return { objects: memoizedItems, loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached }
+  return !!skip ? {} : { objects: memoizedItems, loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached }
 }
