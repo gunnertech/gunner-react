@@ -24,7 +24,7 @@ import { CognitoUserProvider } from '../Contexts/CognitoUser';
 import { CurrentUserProvider } from '../Contexts/CurrentUser';
 import useAppSyncClient from '../Hooks/useAppSyncClient';
 
-console.log("loading 1.0.9")
+console.log("loading 1.0.10")
 
 
 const AppearanceComponent = ({children}) => {

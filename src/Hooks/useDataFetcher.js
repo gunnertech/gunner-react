@@ -103,7 +103,7 @@ export default ({
   , [nextToken])
 
   useInterval(() => 
-    handleRefresh(items.length + 1)
+    !!items && handleRefresh(items.length + 1)
   , 5000);
 
   // useEffect(() => {
