@@ -24,7 +24,7 @@ import { CognitoUserProvider } from '../Contexts/CognitoUser';
 import { CurrentUserProvider } from '../Contexts/CurrentUser';
 import useAppSyncClient from '../Hooks/useAppSyncClient';
 
-console.log("loading 1.0.10")
+console.log("loading 1.0.11")
 
 
 const AppearanceComponent = ({children}) => {
@@ -64,7 +64,7 @@ const InnerApp = ({useCurrentUser, scheme, getElementsTheme, children, cognitoUs
         </ThemeProvider>
       </CurrentUserProvider>
     </ActionSheetProvider>
-  , [currentUser])
+  , [JSON.stringify(currentUser)])
 }
 
 export default ({fonts, initialState: passedInitialState, getElementsTheme = args => args, children, useCurrentUser = () => null, sentryUrl, amplifyConfig, ga}) => {
