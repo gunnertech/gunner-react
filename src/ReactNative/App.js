@@ -24,6 +24,8 @@ import { CognitoUserProvider } from '../Contexts/CognitoUser';
 import { CurrentUserProvider } from '../Contexts/CurrentUser';
 import useAppSyncClient from '../Hooks/useAppSyncClient';
 
+console.log("loading 1.0.7")
+
 
 const AppearanceComponent = ({children}) => {
   const [scheme, setScheme] = useState(useColorScheme());
@@ -66,6 +68,7 @@ const InnerApp = ({useCurrentUser, scheme, getElementsTheme, children, cognitoUs
 }
 
 export default ({fonts, initialState: passedInitialState, getElementsTheme = args => args, children, useCurrentUser = () => null, sentryUrl, amplifyConfig, ga}) => {
+  console.log("loading....")
   const ref = React.useRef();
   const [cognitoUser, setCognitoUser] = useState(undefined);
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -149,11 +152,16 @@ export default ({fonts, initialState: passedInitialState, getElementsTheme = arg
     //   Hub.remove(('auth', onAuthEvent))
   }, []);
 
+  console.log("fontLoaded", fontLoaded);
+  console.log("client", client);
+  console.log("isReady", isReady);
+  console.log("cognitoUser", cognitoUser);
+
   return (
     !fontLoaded ? null :
     !client ? null :
     !isReady ? null :
-    !cognitoUser ? null :
+    cognitoUser === undefined ? null :
     <CognitoUserProvider cognitoUser={cognitoUser}>
       <SafeAreaProvider>
         <AppearanceProvider>
