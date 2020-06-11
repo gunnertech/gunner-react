@@ -68,7 +68,6 @@ const InnerApp = ({useCurrentUser, scheme, getElementsTheme, children, cognitoUs
 }
 
 export default ({fonts, initialState: passedInitialState, getElementsTheme = args => args, children, useCurrentUser = () => null, sentryUrl, amplifyConfig, ga}) => {
-  console.log("loading....")
   const ref = React.useRef();
   const [cognitoUser, setCognitoUser] = useState(undefined);
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -152,10 +151,6 @@ export default ({fonts, initialState: passedInitialState, getElementsTheme = arg
     //   Hub.remove(('auth', onAuthEvent))
   }, []);
 
-  console.log("fontLoaded", fontLoaded);
-  console.log("client", client);
-  console.log("isReady", isReady);
-  console.log("cognitoUser", cognitoUser);
 
   return (
     !fontLoaded ? null :
