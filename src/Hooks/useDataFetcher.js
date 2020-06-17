@@ -146,5 +146,5 @@ export default ({
   // console.log(loading)
 
 
-  return !!skip ? {} : { objects: memoizedItems, loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached }
+  return !!skip ? {} : { objects: memoizedItems, loading: !!fetchAll ? !!nextToken : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached }
 }
