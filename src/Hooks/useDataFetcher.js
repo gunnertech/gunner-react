@@ -115,6 +115,17 @@ export default ({
   // }, [memoizedItems, nextToken, handleEndReached])
 
   useEffect(() => {
+    client.writeQuery({
+      query,
+      [dataKey]: {
+        __typename: connectionTypename,
+        nextToken: null,
+        items: [],
+      },
+    })
+  }, [JSON.stringify(variables), connectionTypename, dataKey])
+
+  useEffect(() => {
     (newObject?.id || updatedObject?.id) &&
     client.query({
       query: subscriptionUpdateQuery,
