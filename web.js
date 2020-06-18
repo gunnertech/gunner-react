@@ -1,3 +1,5 @@
+console.log(require("./dist/React/Contexts/AppBar"));
+
 module.exports = {
   App: require("./dist/React/App").default,
   
