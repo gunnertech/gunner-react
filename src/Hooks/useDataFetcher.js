@@ -79,7 +79,7 @@ export default ({
   , [])
 
   const handleEndReached = useCallback(() =>
-    !nextToken ? (() => null)() : (
+      console.log("NEXT TOKEN", nextToken) || !nextToken ? (() => null)() : (
       fetchMore({
         query,
         variables: {

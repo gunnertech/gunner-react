@@ -30,7 +30,6 @@ export default ({loading, hasMoreItems, objects, onEndReached, RenderComponent, 
   //   )
     !!loading ? "Loading..." :
     <FlatList
-      renderOnScroll
       hasMoreItems={hasMoreItems}
       list={
         objects.filter(uniqByProp('id')).slice().sort(clientSort).filter(clientFilter)
