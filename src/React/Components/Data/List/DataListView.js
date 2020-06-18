@@ -19,7 +19,12 @@ export default ({loading, hasMoreItems, objects, onEndReached, RenderComponent, 
   })
   
   return (
-    objects.filter(clientFilter).map(item => 
+    objects
+      .slice()
+      .filter(uniqByProp('id'))
+      .sort(clientSort)
+      .filter(clientFilter)
+      .map(item => 
       <RenderComponent
         key={item.id}
         id={item.id}
