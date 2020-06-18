@@ -104,7 +104,7 @@ export default ({
   , [nextToken])
 
   useInterval(() => 
-    !!items && handleRefresh(items.length + 1)
+    !!items && handleRefresh(items.length)
   , !!noPoll ? 40000000 : 5000);
 
   // useEffect(() => {

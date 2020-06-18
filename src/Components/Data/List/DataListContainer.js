@@ -27,7 +27,9 @@ export default ({
   prependedObjects = [],
   DataListView,
   noPoll,
-  useButton
+  useButton,
+  usedButton,
+  forceMore
 }) => {
   const {objects, refetch, error, nextToken, loading, onCreateLoading, onUpdateLoading, handleEndReached, handleRefresh } = useDataFetcher({
     mockData, 
@@ -65,6 +67,8 @@ export default ({
       hasMoreItems={!!nextToken}
       loading={loading}
       useButton={useButton}
+      usedButton={usedButton}
+      forceMore={forceMore}
     />
   , [memoizedObjects, loading, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, clientFilter, useButton])
 }

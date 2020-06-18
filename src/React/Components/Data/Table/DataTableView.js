@@ -2,7 +2,7 @@ import React from 'react';
 import { TableRow, TableCell, TableBody, Table, TableHead, TableSortLabel } from '@material-ui/core';
 
 import DataList from "../List";
-
+import { Button } from '@material-ui/core';
 
 
 export default ({
@@ -12,7 +12,9 @@ export default ({
   fields,
   onHeaderCellClick,
 
+  forceMore,
   dataListParams,
+  onLoadMoreClick
 }) =>
   <div className={classes.root}>
     <Table size="small" className={classes.table}>
@@ -40,7 +42,22 @@ export default ({
         </TableRow>
       </TableHead>
       <TableBody>
-        <DataList {...dataListParams} />
+        <DataList 
+          {...dataListParams}
+          forceMore={forceMore}
+          usedButton={true}
+        />
       </TableBody>
     </Table>
+    {
+      <Button 
+        fullWidth 
+        variant="contained" 
+        size="large" 
+        color="secondary"
+        onClick={onLoadMoreClick}
+      >
+        {"Load More"}
+      </Button>
+    }
   </div>

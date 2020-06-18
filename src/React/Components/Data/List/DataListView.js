@@ -13,7 +13,9 @@ export default ({
   viewVariables, 
   clientFilter = item => !!item, 
   clientSort,
-  useButton
+  useButton,
+  usedButton,
+  forceMore
 }) => {
   const handleEndReached = () => {
     if ((window.innerHeight + window.scrollY - 50) >= document.body.offsetHeight) {
@@ -23,10 +25,15 @@ export default ({
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', !!!!useButton ? (() => null) : handleEndReached);
+    window.addEventListener('scroll', !!useButton || !!usedButton ? (() => null) : handleEndReached);
 
     return () => window.removeEventListener('scroll', handleEndReached)
-  }, [!!useButton])
+  }, [!!useButton, !!usedButton])
+
+  useEffect(() => {
+    !!forceMore &&
+    onEndReached()
+  }, [forceMore])
   
   return (
     <>
@@ -66,12 +73,13 @@ export default ({
       {
         !!useButton &&
         !!hasMoreItems &&
+        !usedButton &&
         <Button 
           fullWidth 
           variant="contained" 
           size="large" 
           color="secondary"
-          onClick={handleEndReached}
+          onClick={onEndReached}
           disabled={!!loading}
         >
           {!!loading ? "Loading..." : "Load More"}

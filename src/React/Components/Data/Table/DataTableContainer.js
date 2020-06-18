@@ -13,6 +13,7 @@ export default ({
   const classes = useStyles();
   const [orderBy, setOrderBy] = useState(null);
   const [order, setOrder] = useState('desc');
+  const [forceMore, setForceMore] = useState(0);
 
   const CustomTableRow = ({object, id, filter = item => true}) => {
     return (
@@ -52,6 +53,8 @@ export default ({
       order={order}
       fields={fields}
       onHeaderCellClick={handleHeaderCellClick}
+      onLoadMoreClick={() => setForceMore(forceMore => forceMore + 1)}
+      forceMore={forceMore}
 
       dataListParams={{
         RenderComponent: CustomTableRow,
