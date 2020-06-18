@@ -26,10 +26,9 @@ export default ({
   clientSort,
   prependedObjects = [],
   DataListView,
-  noPoll
+  noPoll,
+  useButton
 }) => {
-  console.log("NO POLL", noPoll);
-  
   const {objects, refetch, error, nextToken, loading, onCreateLoading, onUpdateLoading, handleEndReached, handleRefresh } = useDataFetcher({
     mockData, 
     query, 
@@ -65,6 +64,7 @@ export default ({
       clientSort={clientSort}
       hasMoreItems={!!nextToken}
       loading={loading}
+      useButton={useButton}
     />
-  , [memoizedObjects, loading, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, clientFilter])
+  , [memoizedObjects, loading, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, clientFilter, useButton])
 }
