@@ -80,7 +80,7 @@ export default ({
   , [])
 
   const handleEndReached = useCallback(() =>
-      console.log("NEXT TOKEN", nextToken) || !nextToken ? (() => null)() : (
+      console.log("NEXT TOKEN", nextToken, variables) || !nextToken ? (() => null)() : (
       fetchMore({
         query,
         variables: {
