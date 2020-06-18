@@ -6,5 +6,5 @@ module.exports = {
 
   useTracker: require("./dist/React/Hooks/useTracker").default,
 
-  AppBarContext: require("./dist/React/Contexts/AppBar").default
+  AppBarContext: require("./dist/React/Contexts/AppBar").AppBarContext
 }
