@@ -14,6 +14,8 @@ export default ({
   const [orderBy, setOrderBy] = useState(null);
   const [order, setOrder] = useState('desc');
   const [forceMore, setForceMore] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(null);
 
   const CustomTableRow = ({object, id, filter = item => true}) => {
     return (
@@ -55,6 +57,12 @@ export default ({
       onHeaderCellClick={handleHeaderCellClick}
       onLoadMoreClick={() => setForceMore(forceMore => forceMore + 1)}
       forceMore={forceMore}
+
+      onLoaded={loaded => setLoaded(loaded)}
+      onLoading={loading => setLoading(loading)}
+
+      loading={loading}
+      loaded={loaded}
 
       dataListParams={{
         RenderComponent: CustomTableRow,

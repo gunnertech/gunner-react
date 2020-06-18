@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useEffect } from 'react'
 import useDataFetcher from '../../../Hooks/useDataFetcher';
 
 
@@ -29,7 +29,9 @@ export default ({
   noPoll,
   useButton,
   usedButton,
-  forceMore
+  forceMore,
+  onLoading,
+  onLoaded
 }) => {
   const {objects, refetch, error, nextToken, loading, onCreateLoading, onUpdateLoading, handleEndReached, handleRefresh } = useDataFetcher({
     mockData, 
@@ -55,6 +57,14 @@ export default ({
     ], 
     [JSON.stringify([...prependedObjects, ...objects])]
   )
+
+  useEffect(() => {
+    !!onLoading && onLoading(loading)
+  }, [loading])
+
+  useEffect(() => {
+    !!onLoaded && onLoaded(nextToken)
+  }, [nextToken])
 
   return useMemo(() =>
     <DataListView

@@ -14,7 +14,11 @@ export default ({
 
   forceMore,
   dataListParams,
-  onLoadMoreClick
+  onLoadMoreClick,
+  onLoading,
+  onLoaded,
+  loading,
+  loaded,
 }) =>
   <div className={classes.root}>
     <Table size="small" className={classes.table}>
@@ -46,10 +50,14 @@ export default ({
           {...dataListParams}
           forceMore={forceMore}
           usedButton={true}
+          onLoaded={onLoaded}
+          onLoading={onLoading}
         />
       </TableBody>
     </Table>
     {
+      !!loaded &&
+      !!dataListParams?.useButton &&
       <Button 
         fullWidth 
         variant="contained" 
@@ -57,7 +65,7 @@ export default ({
         color="secondary"
         onClick={onLoadMoreClick}
       >
-        {"Load More"}
+        {!!loading ? "Loading..." : "Load More"}
       </Button>
     }
   </div>
