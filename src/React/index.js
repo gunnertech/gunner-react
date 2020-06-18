@@ -1,6 +1,12 @@
-export useTracke from "./Hooks/useTracker"
+const { AppBarContext } = require("./Contexts/AppBar")
+
+export useTracker from "./Hooks/useTracker"
 
 export DataList from "./Components/Data/List"
 export DataListView from "./Components/Data/List/DataListView"
 
 export App from "./App"
+
+export {
+  AppBarContext
+}
