@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableRow, TableCell, TableBody, Table, TableHead, TableSortLabel } from '@material-ui/core';
 
-import { DataList } from "../List";
+import DataList from "../List";
 
 
 
