@@ -1,7 +1,7 @@
 import React from 'react'
 import FlatList from 'flatlist-react';
 import uniqByProp from '../../../../Util/uniqByProp';
-// import { useEffect } from 'react'
+import { useEffect } from 'react'
 
 
 export default ({loading, hasMoreItems, objects, onEndReached, RenderComponent, viewVariables, clientFilter = item => !!item, clientSort}) => {
