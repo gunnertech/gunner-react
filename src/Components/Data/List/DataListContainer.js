@@ -28,6 +28,8 @@ export default ({
   DataListView,
   noPoll
 }) => {
+  console.log("NO POLL", noPoll);
+  
   const {objects, refetch, error, nextToken, loading, onCreateLoading, onUpdateLoading, handleEndReached, handleRefresh } = useDataFetcher({
     mockData, 
     query, 
