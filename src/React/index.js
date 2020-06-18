@@ -1,4 +1,4 @@
-const { AppBarContext } = require("./Contexts/AppBar")
+import { AppBarContext } from "./Contexts/AppBar"
 
 export useTracker from "./Hooks/useTracker"
 
