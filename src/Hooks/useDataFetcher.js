@@ -7,6 +7,7 @@ export default ({
   doFreshLoad, 
   query,
   fetchAll, 
+  noPoll,
   
   subscriptionCreateDataKey,
   subscriptionCreateVariables,
@@ -104,7 +105,7 @@ export default ({
 
   useInterval(() => 
     !!items && handleRefresh(items.length + 1)
-  , 5000);
+  , !!noPoll ? 40000000 : 5000);
 
   // useEffect(() => {
   //   // console.log(memoizedItems?.length, !!nextToken)

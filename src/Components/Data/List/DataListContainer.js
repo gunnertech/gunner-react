@@ -25,13 +25,16 @@ export default ({
   clientFilter = item => !!item,
   clientSort,
   prependedObjects = [],
-  DataListView
+  DataListView,
+  noPoll
 }) => {
   const {objects, refetch, error, nextToken, loading, onCreateLoading, onUpdateLoading, handleEndReached, handleRefresh } = useDataFetcher({
     mockData, 
     query, 
     variables, 
     dataKey,
+
+    noPoll,
     
     subscriptionCreateDataKey,
     subscriptionCreateVariables,

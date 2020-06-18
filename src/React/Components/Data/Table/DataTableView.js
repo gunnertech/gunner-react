@@ -13,12 +13,6 @@ export default ({
   onHeaderCellClick,
 
   dataListParams,
-  RenderComponent,
-  query,
-  dataKey,
-  clientSort,
-  clientFilter,
-  variables
 }) =>
   <div className={classes.root}>
     <Table size="small" className={classes.table}>
