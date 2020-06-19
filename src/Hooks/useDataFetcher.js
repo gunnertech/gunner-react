@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useCallback } from "react";
+import { useEffect, useMemo, useCallback, useState } from "react";
 import { useQuery, useSubscription } from "@apollo/client";
 import useInterval from "./useInterval";
+import { useApolloClient } from "@apollo/client"
 
 export default ({
   mockData = [], 
@@ -22,15 +23,13 @@ export default ({
   dataKey,
   skip,
 }) => {
-  
-  // const client = useApolloClient();
+  const [loading, setLoading] = useState(false);
+  const client = useApolloClient();
   const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
     skip: !!skip,
     // pollInterval: 5000,
     variables
   });
-
-  const loading = !!dumbLoading && !items;
 
 
   const entry = useSubscription(subscriptionCreateMutation, {
@@ -64,7 +63,7 @@ export default ({
         nextToken: null,
         limit: limit ?? variables.limit
       },
-      updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items }}, { fetchMoreResult: {[dataKey]: {nextToken, items: newItems }} }) => 
+      updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items }}, { fetchMoreResult: {[dataKey]: {items: newItems }} }) => 
       ({
         __typename,
         [dataKey]: {
@@ -77,10 +76,11 @@ export default ({
         }
       })
     })
-  , [])
+  , [JSON.stringify(variables), nextToken])
 
   const handleEndReached = useCallback(() =>
-      console.log("NEXT TOKEN", nextToken, variables) || !nextToken ? (() => null)() : (
+    !nextToken ? (() => null)() : Promise.all([
+      setLoading(true),
       fetchMore({
         query,
         variables: {
@@ -100,11 +100,12 @@ export default ({
           }
         })
       })
-    )
-  , [nextToken])
+      .then(() => setLoading(false))
+    ])
+  , [nextToken, JSON.stringify(variables)])
 
   useInterval(() => 
-    !!items && handleRefresh(items.length)
+    !!items && handleRefresh(items.length || 1)
   , !!noPoll ? 40000000 : 5000);
 
   // useEffect(() => {
@@ -115,15 +116,20 @@ export default ({
   // }, [memoizedItems, nextToken, handleEndReached])
 
   useEffect(() => {
+    setLoading(dumbLoading);
+  }, [dumbLoading])
+
+  useEffect(() => {
     client.writeQuery({
       query,
-      [dataKey]: {
-        __typename: connectionTypename,
-        nextToken: null,
-        items: [],
-      },
+      data: {
+        [dataKey]: {
+          nextToken: null,
+          items: [],
+        },
+      }
     })
-  }, [JSON.stringify(variables), connectionTypename, dataKey])
+  }, [JSON.stringify(variables), dataKey])
 
   useEffect(() => {
     (newObject?.id || updatedObject?.id) &&
@@ -158,5 +164,5 @@ export default ({
   // console.log(loading)
 
 
-  return !!skip ? {} : { objects: memoizedItems, loading: !!fetchAll ? !!nextToken || !!dumbLoading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached }
+  return !!skip ? {} : { objects: memoizedItems, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached }
 }

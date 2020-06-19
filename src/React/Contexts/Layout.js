@@ -6,7 +6,11 @@ const Layout = React.createContext({
   hideNav: () => null
 });
 
-const LayoutProvider = ({children}) => {
+const LayoutProvider = ({
+  children, 
+  LayoutComponent = LayoutComponent, 
+  MainNavigation
+}) => {
   const [showNav, setShowNav] = useState(true);
 
   return (
@@ -16,7 +20,7 @@ const LayoutProvider = ({children}) => {
         hideNav: () => setShowNav(false)
       }}
     >
-      <LayoutComponent showNav={showNav}>
+      <LayoutComponent showNav={showNav} MainNavigation={MainNavigation}>
         {children}
       </LayoutComponent>
     </Layout.Provider>

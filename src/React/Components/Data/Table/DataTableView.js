@@ -64,6 +64,7 @@ export default ({
         size="large" 
         color="secondary"
         onClick={onLoadMoreClick}
+        disabled={!!loading}
       >
         {!!loading ? "Loading..." : "Load More"}
       </Button>
