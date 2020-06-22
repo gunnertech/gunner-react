@@ -33,7 +33,8 @@ export default ({
   onLoading,
   onLoaded,
   onItemsChange,
-  doClear
+  doClear,
+  transform = items => items
 }) => {
   const { objects, refetch, error, nextToken, loading, onCreateLoading, onUpdateLoading, handleEndReached, handleRefresh, clearResults } = useDataFetcher({
     mockData, 
@@ -55,10 +56,10 @@ export default ({
     onItemsChange
   });
 
-  const memoizedObjects = useMemo(() => [
+  const memoizedObjects = useMemo(() => transform([
       ...prependedObjects, 
       ...objects.filter(obj => !prependedObjects.find(po => po.id === obj.id))
-    ], 
+    ]), 
     [JSON.stringify([...prependedObjects, ...objects])]
   )
 
