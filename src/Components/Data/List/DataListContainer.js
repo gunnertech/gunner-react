@@ -31,9 +31,11 @@ export default ({
   usedButton,
   forceMore,
   onLoading,
-  onLoaded
+  onLoaded,
+  onItemsChange,
+  doClear
 }) => {
-  const {objects, refetch, error, nextToken, loading, onCreateLoading, onUpdateLoading, handleEndReached, handleRefresh } = useDataFetcher({
+  const { objects, refetch, error, nextToken, loading, onCreateLoading, onUpdateLoading, handleEndReached, handleRefresh, clearResults } = useDataFetcher({
     mockData, 
     query, 
     variables, 
@@ -48,7 +50,9 @@ export default ({
     subscriptionUpdateDataKey,
     subscriptionUpdateVariables,
     subscriptionUpdateMutation,
-    subscriptionUpdateQuery
+    subscriptionUpdateQuery,
+
+    onItemsChange
   });
 
   const memoizedObjects = useMemo(() => [
@@ -66,6 +70,8 @@ export default ({
     !!onLoaded && onLoaded(nextToken)
   }, [nextToken])
 
+  !!doClear && setTimeout(clearResults, 3000)
+
   return useMemo(() =>
     <DataListView
       objects={memoizedObjects}
@@ -80,5 +86,5 @@ export default ({
       usedButton={usedButton}
       forceMore={forceMore}
     />
-  , [memoizedObjects, loading, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, clientFilter, useButton])
+  , [memoizedObjects, loading, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, clientFilter, useButton, forceMore])
 }

@@ -7,8 +7,11 @@ module.exports = {
   Form: require("./dist/React/Components/Form").default,
   PhotoUpload: require("./dist/React/Components/PhotoUpload").default,
   Modal: require("./dist/React/Components/Modal").default,
+  Auth: require("./dist/React/Components/Auth").default,
+  PasswordField: require("./dist/React/Components/Auth").PasswordField,
 
   useTracker: require("./dist/React/Hooks/useTracker").default,
+  useHasVisitedScreen: require("./dist/React/Hooks/useHasVisitedScreen").default,
 
   GroupRoute: require("./dist/React/Routes/Group").default,
   PrivateRoute: require("./dist/React/Routes/Private").default,

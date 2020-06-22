@@ -22,6 +22,8 @@ export default ({
   variables, 
   dataKey,
   skip,
+
+  onItemsChange = items => null
 }) => {
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
@@ -54,6 +56,35 @@ export default ({
 
   const memoizedItems = useMemo(() => items ?? [], [JSON.stringify(items)]);
 
+  const handleItemsChange = useCallback(items => 
+    onItemsChange(items)
+  , [])
+
+  const clearResults = () =>
+    fetchMore({
+      query,
+      variables: {
+        ...variables,
+        nextToken: null,
+        limit: variables.limit
+      },
+      // updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems }} }) => 
+      updateQuery: (resp, resp2) => 
+      console.log("resp", resp, resp2)
+    })
+    //   !!__typename &&
+    //   ({
+    //     __typename,
+    //     [dataKey]: {
+    //       __typename: connectionTypename,
+    //       nextToken,
+    //       items: [
+    //         ...newItems,
+    //       ]
+    //     }
+    //   })
+    // })
+
 
   const handleRefresh = useCallback(limit => 
     fetchMore({
@@ -79,6 +110,7 @@ export default ({
   , [JSON.stringify(variables), nextToken])
 
   const handleEndReached = useCallback(() =>
+    console.log("loading more") ||
     !nextToken ? (() => null)() : Promise.all([
       setLoading(true),
       fetchMore({
@@ -100,7 +132,7 @@ export default ({
           }
         })
       })
-      .then(() => setLoading(false))
+      .then(() => console.log("done loading more") ||setLoading(false))
     ])
   , [nextToken, JSON.stringify(variables)])
 
@@ -114,6 +146,10 @@ export default ({
   //   !memoizedItems?.length &&
   //   handleEndReached()
   // }, [memoizedItems, nextToken, handleEndReached])
+
+  useEffect(() => {
+    handleItemsChange(memoizedItems)
+  }, [handleItemsChange, memoizedItems])
 
   useEffect(() => {
     setLoading(dumbLoading);
@@ -163,6 +199,8 @@ export default ({
 
   // console.log(loading)
 
+  
 
-  return !!skip ? {} : { objects: memoizedItems, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached }
+
+  return !!skip ? {} : { objects: memoizedItems, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached, clearResults }
 }

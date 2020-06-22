@@ -11,14 +11,22 @@ import MomentUtils from '@date-io/moment';
 import useAppSyncClient from '../Hooks/useAppSyncClient';
 import { CurrentUserProvider } from '../Contexts/CurrentUser';
 import { AppBarProvider } from './Contexts/AppBar';
+import useCurrentUser from '../Hooks/useCurrentUser';
 
 
 
 
 
 
-const AppWithCognitoUser = ({cognitoUser, children, useCurrentUser}) => {
-  const currentUser = useCurrentUser({cognitoUser});
+const AppWithCognitoUser = ({
+  cognitoUser, 
+  children, 
+  useFindUser,
+  useCreateUser,
+  useUpdateUser,
+  useNotificationPermissions,
+}) => {
+  const currentUser = useCurrentUser({cognitoUser, useNotificationPermissions, useFindUser, useCreateUser, useUpdateUser});
   return (
     <CurrentUserProvider currentUser={currentUser}>
       {
@@ -36,10 +44,19 @@ const AppWithCognitoUser = ({cognitoUser, children, useCurrentUser}) => {
 
 
 
-export default ({children, theme, useCurrentUser = () => null, sentryUrl, amplifyConfig, ga}) => {
+export default ({
+  children, 
+  theme, 
+  sentryUrl, 
+  amplifyConfig, 
+  ga,
+  useFindUser,
+  useCreateUser,
+  useUpdateUser,
+  useNotificationPermissions,
+}) => {
   const [cognitoUser, setCognitoUser] = useState(undefined);
   const appsyncClient = useAppSyncClient({cognitoUser, appSyncConfig: amplifyConfig});
-  
   
   
 
@@ -110,7 +127,14 @@ export default ({children, theme, useCurrentUser = () => null, sentryUrl, amplif
       <ApolloProvider client={appsyncClient}>
         {/* <Rehydrated> */}
           <MuiThemeProvider theme={theme}>
-            <AppWithCognitoUser appsyncClient={appsyncClient} cognitoUser={cognitoUser} useCurrentUser={useCurrentUser}>
+            <AppWithCognitoUser 
+              appsyncClient={appsyncClient} 
+              cognitoUser={cognitoUser} 
+              useFindUser={useFindUser}
+              useCreateUser={useCreateUser}
+              useUpdateUser={useUpdateUser}
+              useNotificationPermissions={useNotificationPermissions}
+            >
               {children}
             </AppWithCognitoUser>
           </MuiThemeProvider>

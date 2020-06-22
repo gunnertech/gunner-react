@@ -23,8 +23,7 @@ import { StatusBar } from 'react-native';
 import { CognitoUserProvider } from '../Contexts/CognitoUser';
 import { CurrentUserProvider } from '../Contexts/CurrentUser';
 import useAppSyncClient from '../Hooks/useAppSyncClient';
-
-console.log("loading 1.0.11")
+import useCurrentUser from '../Hooks/useCurrentUser';
 
 
 const AppearanceComponent = ({children}) => {
@@ -48,8 +47,18 @@ const AppearanceComponent = ({children}) => {
 }
 
 
-const InnerApp = ({useCurrentUser, scheme, getElementsTheme, children, cognitoUser}) => {
-  const currentUser = useCurrentUser({cognitoUser});
+const InnerApp = ({
+  scheme, 
+  getElementsTheme, 
+  children, 
+  cognitoUser,
+  useFindUser,
+  useCreateUser,
+  useUpdateUser,
+  useNotificationPermissions,
+}) => {
+  const currentUser = useCurrentUser({cognitoUser, useNotificationPermissions, useFindUser, useCreateUser, useUpdateUser});
+  
   return useMemo(() => 
     <ActionSheetProvider>
       <CurrentUserProvider currentUser={currentUser}>
@@ -67,7 +76,19 @@ const InnerApp = ({useCurrentUser, scheme, getElementsTheme, children, cognitoUs
   , [JSON.stringify(currentUser)])
 }
 
-export default ({fonts, initialState: passedInitialState, getElementsTheme = args => args, children, useCurrentUser = () => null, sentryUrl, amplifyConfig, ga}) => {
+export default ({
+  fonts, 
+  initialState: passedInitialState, 
+  getElementsTheme = args => args, 
+  children, 
+  sentryUrl, 
+  amplifyConfig, 
+  ga,
+  useFindUser,
+  useCreateUser,
+  useUpdateUser,
+  useNotificationPermissions,
+}) => {
   const ref = React.useRef();
   const [cognitoUser, setCognitoUser] = useState(undefined);
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -81,14 +102,14 @@ export default ({fonts, initialState: passedInitialState, getElementsTheme = arg
   Amplify.configure(amplifyConfig);
   AmplifyAnalytics.configure({ disabled: true });
 
-  // !!sentryUrl && [
-  //   Sentry.init({
-  //     dsn: sentryUrl,
-  //     enableInExpoDevelopment: false,
-  //     debug: true
-  //   }),
-  //   Sentry.setRelease(Constants.manifest.revisionId)
-  // ]
+  !!sentryUrl && [
+    Sentry.init({
+      dsn: sentryUrl,
+      enableInExpoDevelopment: false,
+      debug: true
+    }),
+    Sentry.setRelease(Constants.manifest.revisionId)
+  ]
 
   useEffect(() => {
     getInitialState()
@@ -165,7 +186,15 @@ export default ({fonts, initialState: passedInitialState, getElementsTheme = arg
               <NavigationContainer initialState={initialState} ref={ref} theme={getElementsTheme({navTheme: scheme === 'dark' ? DarkTheme : DefaultTheme, scheme})}>
                 <ApolloProvider client={client}>
                   {/* <Rehydrated> */}
-                    <InnerApp cognitoUser={cognitoUser} useCurrentUser={useCurrentUser} scheme={scheme} getElementsTheme={getElementsTheme}>
+                    <InnerApp 
+                      cognitoUser={cognitoUser} 
+                      useFindUser={useFindUser}
+                      useCreateUser={useCreateUser}
+                      useUpdateUser={useUpdateUser}
+                      useNotificationPermissions={useNotificationPermissions}
+                      scheme={scheme} 
+                      getElementsTheme={getElementsTheme}
+                    >
                       {children}
                     </InnerApp>
                   {/* </Rehydrated> */}
