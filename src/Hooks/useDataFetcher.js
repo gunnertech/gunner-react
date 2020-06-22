@@ -29,7 +29,7 @@ export default ({
   const client = useApolloClient();
   const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
     skip: !!skip,
-    pollInterval: !!noPoll ? 40000000 : 5000,
+    // pollInterval: 5000,
     variables
   });
 
@@ -137,9 +137,9 @@ export default ({
     ])
   , [nextToken, JSON.stringify(variables)])
 
-  // useInterval(() => 
-  //   !!items && handleRefresh(items.length || 1)
-  // , !!noPoll ? 40000000 : 5000);
+  useInterval(() => 
+    !!items && handleRefresh(Math.max(items.length, variables.limit ?? defaultLimit))
+  , !!noPoll ? 40000000 : 5000);
 
   // useEffect(() => {
   //   // console.log(memoizedItems?.length, !!nextToken)

@@ -8,6 +8,7 @@ import DataTableView from './DataTableView';
 export default ({
   fields, 
   search, 
+  defaultSort = order => (a, b) => a.createdAt > b.createdAt ? (order === 'desc' ? -1 : 1) : (order === 'asc' ? -1 : 1),
   dataListParams
 }) => {
   const classes = useStyles();
@@ -38,7 +39,6 @@ export default ({
       setOrderBy(label)
     )
   
-  const defaultSort = order => (a, b) => a.createdAt > b.createdAt ? (order === 'desc' ? -1 : 1) : (order === 'asc' ? -1 : 1);
   const selectedField = Object.entries(fields).find(([label, field]) => label === orderBy);
   const sortFunc = !!selectedField ? selectedField[1].sort(order) : defaultSort(order);
   const filterFunc = item => 
