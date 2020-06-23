@@ -25,7 +25,7 @@ import { CurrentUserProvider } from '../Contexts/CurrentUser';
 import useAppSyncClient from '../Hooks/useAppSyncClient';
 import useCurrentUser from '../Hooks/useCurrentUser';
 import * as Sentry from 'sentry-expo';
-
+import Constants from 'expo-constants';
 
 const AppearanceComponent = ({children}) => {
   const [scheme, setScheme] = useState(useColorScheme());
