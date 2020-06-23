@@ -24,6 +24,7 @@ import { CognitoUserProvider } from '../Contexts/CognitoUser';
 import { CurrentUserProvider } from '../Contexts/CurrentUser';
 import useAppSyncClient from '../Hooks/useAppSyncClient';
 import useCurrentUser from '../Hooks/useCurrentUser';
+import * as Sentry from 'sentry-expo';
 
 
 const AppearanceComponent = ({children}) => {
