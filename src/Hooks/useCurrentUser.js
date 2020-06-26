@@ -14,7 +14,7 @@ const useNotificationPermissions = currentUser => ({})
 
 export default ({
   cognitoUser,
-  useFindUser = ({cognitoUser}) => ({}),
+  useFindUser = ({cognitoUser}) => ({user: cognitoUser}),
   useCreateUser = ({cognitoUser}) => [() => Promise.resolve(null)],
   useUpdateUser = ({cognitoUser}) => [() => Promise.resolve(null)],
   useNotificationPermissions = currentUser => ({})
