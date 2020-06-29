@@ -56,6 +56,13 @@ const Validations = {
   }
 }
 
+const countCharacters = characters =>
+  !characters ? (
+    0
+  ) : (
+    characters.replace(/\D/g, "").length
+  )
+
 const TextMaskCustom = (props) => {
   const { inputRef, ...other } = props;
 
@@ -65,7 +72,7 @@ const TextMaskCustom = (props) => {
       ref={ref => {
         inputRef(ref ? ref.inputElement : null);
       }}
-      mask={rawValue => false ? (
+      mask={rawValue => !countCharacters(rawValue) ? (
         []
       // ) : countCharacters(rawValue) <= 11 ? (
       //   ['+', /\d/, ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
