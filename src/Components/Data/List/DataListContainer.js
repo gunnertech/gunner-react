@@ -34,7 +34,8 @@ export default ({
   onLoaded,
   onItemsChange,
   doClear,
-  transform = items => items
+  transform = items => items,
+  onScroll
 }) => {
   const { objects, refetch, error, nextToken, loading, onCreateLoading, onUpdateLoading, handleEndReached, handleRefresh, clearResults } = useDataFetcher({
     mockData, 
@@ -75,6 +76,7 @@ export default ({
 
   return useMemo(() =>
     <DataListView
+      onScroll={onScroll}
       objects={memoizedObjects}
       onEndReached={handleEndReached}
       RenderComponent={RenderComponent}

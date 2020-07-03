@@ -3,8 +3,9 @@ import { FlatList, View, Text } from 'react-native'
 import uniqByProp from '../../../../Util/uniqByProp';
 
 
-export default ({objects, loading, onRefresh, onEndReached, RenderComponent, viewVariables, clientFilter = item => !!item, clientSort}) =>
+export default ({onScroll, objects, loading, onRefresh, onEndReached, RenderComponent, viewVariables, clientFilter = item => !!item, clientSort}) =>
   <FlatList
+    onScroll={onScroll}
     keyboardShouldPersistTaps="handled"
     ListEmptyComponent={
       !!loading ? null :
