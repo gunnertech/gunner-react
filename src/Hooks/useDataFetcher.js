@@ -95,7 +95,7 @@ export default ({
         nextToken: null,
         limit: limit ?? variables.limit
       },
-      updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items }}, { fetchMoreResult: {[dataKey]: {items: newItems }} }) => 
+      updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems }} }) => 
       ({
         __typename,
         [dataKey]: {

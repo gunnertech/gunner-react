@@ -1,6 +1,6 @@
 {
   "name": "gunner-react",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "Shared Components, Hooks, Contexts, Utils and more, common across Gunner's React and React Native projects",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
