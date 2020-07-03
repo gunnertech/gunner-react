@@ -120,7 +120,7 @@ export default ({
           ...variables,
           nextToken
         },
-        updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items }}, { fetchMoreResult: {[dataKey]: {nextToken, items: newItems }} }) =>
+        updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items } = {}} = {}, { fetchMoreResult: {[dataKey]: {nextToken, items: newItems }} }) =>
         ({
           __typename,
           [dataKey]: {
