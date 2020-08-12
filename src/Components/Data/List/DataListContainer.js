@@ -89,5 +89,5 @@ export default ({
       usedButton={usedButton}
       forceMore={forceMore}
     />
-  , [memoizedObjects])//, loading, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, clientFilter, useButton, forceMore])
+  , [memoizedObjects, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, clientFilter, useButton, forceMore])//, loading, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, clientFilter, useButton, forceMore])
 }
