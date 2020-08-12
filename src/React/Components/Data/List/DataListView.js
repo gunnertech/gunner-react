@@ -34,6 +34,8 @@ export default ({
     !!forceMore &&
     onEndReached()
   }, [forceMore])
+
+  console.log("RENDIERING")
   
   return (
     <>
