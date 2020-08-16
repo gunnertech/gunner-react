@@ -8,7 +8,7 @@ module.exports = {
   PhotoUpload: require("./dist/React/Components/PhotoUpload").default,
   Modal: require("./dist/React/Components/Modal").default,
   Auth: require("./dist/React/Components/Auth").default,
-  PasswordField: require("./dist/React/Components/Auth").PasswordField,
+  PasswordField: require("./dist/React/Components/Auth/Fields/index").PasswordField,
 
   useTracker: require("./dist/React/Hooks/useTracker").default,
   useHasVisitedScreen: require("./dist/React/Hooks/useHasVisitedScreen").default,
