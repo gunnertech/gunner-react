@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { TableRow, TableCell } from '@material-ui/core';
 
 import useStyles from './DataTableStyles';
@@ -41,11 +41,12 @@ export default ({
   
   const selectedField = Object.entries(fields).find(([label, field]) => label === orderBy);
   const sortFunc = !!selectedField ? selectedField[1].sort(order) : defaultSort(order);
-  const filterFunc = item => 
+  const filterFunc = useCallback(item => 
     !!Object.entries(fields)
       .map(([label, field]) => !!field.searchValue ? field.searchValue(item) : field.value(item))
       .join(", ")
       .includes(search||"")
+  , [order, orderBy])
 
 
   return (
