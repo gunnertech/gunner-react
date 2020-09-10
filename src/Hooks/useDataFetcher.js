@@ -60,30 +60,30 @@ export default ({
     onItemsChange(items)
   , [])
 
-  const clearResults = () =>
-    fetchMore({
-      query,
-      variables: {
-        ...variables,
-        nextToken: null,
-        limit: variables.limit
-      },
-      // updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems }} }) => 
-      updateQuery: (resp, resp2) => 
-      console.log("resp", resp, resp2)
-    })
-    //   !!__typename &&
-    //   ({
-    //     __typename,
-    //     [dataKey]: {
-    //       __typename: connectionTypename,
-    //       nextToken,
-    //       items: [
-    //         ...newItems,
-    //       ]
-    //     }
-    //   })
+  const clearResults = () => null
+    // fetchMore({
+    //   query,
+    //   variables: {
+    //     ...variables,
+    //     nextToken: null,
+    //     limit: variables.limit
+    //   },
+    //   // updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems }} }) => 
+    //   updateQuery: (resp, resp2) => 
+    //   console.log("resp", resp, resp2)
     // })
+    // //   !!__typename &&
+    // //   ({
+    // //     __typename,
+    // //     [dataKey]: {
+    // //       __typename: connectionTypename,
+    // //       nextToken,
+    // //       items: [
+    // //         ...newItems,
+    // //       ]
+    // //     }
+    // //   })
+    // // })
 
   const defaultLimit = 10;
 
@@ -111,7 +111,6 @@ export default ({
   , [JSON.stringify(variables), nextToken])
 
   const handleEndReached = useCallback(() =>
-    console.log("loading more") ||
     !nextToken ? (() => null)() : Promise.all([
       setLoading(true),
       fetchMore({

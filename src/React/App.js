@@ -54,6 +54,7 @@ export default ({
   useCreateUser,
   useUpdateUser,
   useNotificationPermissions,
+  sentryConfig
 }) => {
   const [cognitoUser, setCognitoUser] = useState(undefined);
   const appsyncClient = useAppSyncClient({cognitoUser, appSyncConfig: amplifyConfig});
@@ -67,7 +68,8 @@ export default ({
 
     Amplify.configure(amplifyConfig);
     
-    !!sentryUrl && Sentry.init({
+    (!!sentryUrl || !!sentryConfig) && 
+    Sentry.init(sentryConfig ?? {
       dsn: sentryUrl
     });
 
