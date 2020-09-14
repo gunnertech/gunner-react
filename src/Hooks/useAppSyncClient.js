@@ -49,6 +49,8 @@ export default ({cognitoUser, appSyncConfig}) => {
   const [appSyncClient, setAppSyncClient] = useState(null);
 
   useEffect(() => {
+    console.log(cognitoUser === undefined ? null : !!cognitoUser ? "cognitoClient" : "iamClient")
+    console.log(cognitoUser === undefined ? null : !!cognitoUser ? cognitoClient : iamClient)
     setAppSyncClient(cognitoUser === undefined ? null : !!cognitoUser ? cognitoClient : iamClient)
     
     return () => setAppSyncClient(null)
