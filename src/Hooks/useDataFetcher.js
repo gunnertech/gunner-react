@@ -25,6 +25,14 @@ export default ({
 
   onItemsChange = items => null
 }) => {
+  // const test = useQuery(query, {
+  //   skip: !!skip,
+  //   // pollInterval: 5000,
+  //   variables
+  // });
+
+  // console.log("TEddST", test)
+
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
@@ -38,7 +46,7 @@ export default ({
     skip: !subscriptionCreateMutation || !!skip,
     variables: subscriptionCreateVariables
   })
-  const newObject = null; //entry?.data?.[subscriptionCreateDataKey];
+  const newObject = !subscriptionCreateDataKey ? null : entry?.data?.[subscriptionCreateDataKey];
   const onCreateLoading = false; //!!entry?.loading;
 
   // console.log("ENTRY", entry)
@@ -47,7 +55,7 @@ export default ({
     skip: !subscriptionUpdateMutation || !!skip,
     variables: subscriptionUpdateVariables
   })
-  const updatedObject = updateEntry?.data?.[subscriptionUpdateDataKey];
+  const updatedObject = !subscriptionUpdateDataKey ? null : updateEntry?.data?.[subscriptionUpdateDataKey];
   const onUpdateLoading = !!updateEntry?.loading;
 
   // console.log("NEW OB", entry?.data)
@@ -108,6 +116,7 @@ export default ({
         }
       })
     })
+    .then(() => console.log("done loading new"))
   , [JSON.stringify(variables), nextToken])
 
   const handleEndReached = useCallback(() =>
@@ -132,7 +141,7 @@ export default ({
           }
         })
       })
-      .then(() => console.log("done loading more") ||setLoading(false))
+      .then(() => console.log("done loading more") || setLoading(false))
     ])
   , [nextToken, JSON.stringify(variables)])
 
@@ -155,27 +164,28 @@ export default ({
     setLoading(dumbLoading);
   }, [dumbLoading])
 
-  useEffect(() => {
-    client.writeQuery({
-      query,
-      data: {
-        [dataKey]: {
-          nextToken: null,
-          items: [],
-        },
-      }
-    })
-  }, [JSON.stringify(variables), dataKey])
+  // useEffect(() => { NOTE: Turned this off because it was causing a refetch of the data everytime
+  //   client.writeQuery({
+  //     query,
+  //     data: {
+  //       [dataKey]: {
+  //         nextToken: null,
+  //         items: [],
+  //       },
+  //     }
+  //   })
+  // }, [JSON.stringify(variables), dataKey])
 
   useEffect(() => {
     (newObject?.id || updatedObject?.id) &&
+    !!subscriptionUpdateQuery &&
     client.query({
       query: subscriptionUpdateQuery,
       variables: {
         id: (newObject?.id || updatedObject?.id)
       }
     })
-  }, [newObject?.id, updatedObject?.id])
+  }, [subscriptionUpdateQuery, newObject?.id, updatedObject?.id])
 
 
   useEffect(() => {

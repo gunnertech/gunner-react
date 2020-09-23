@@ -46,13 +46,13 @@ export default ({
           .sort(clientSort)
           .filter(clientFilter)
           .map(item => 
-          <RenderComponent
-            key={item.id}
-            id={item.id}
-            object={item}
-            filter={clientFilter}
-            {...viewVariables ?? {}}
-          />  
+            <RenderComponent
+              key={item.id}
+              id={item.id}
+              object={item}
+              filter={clientFilter}
+              {...viewVariables ?? {}}
+            />  
         )
         // !!loading ? "Loading..." :
         // <FlatList

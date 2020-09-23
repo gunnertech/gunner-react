@@ -39,7 +39,7 @@ export default ({
   useEffect(() => {
     !!user &&
     !!cognitoUser &&
-    setCurrentUser({...user, ...cognitoUser, groups: (cognitoUser.signInUserSession.accessToken.payload['cognito:groups'] || [])})
+    setCurrentUser({...user, ...cognitoUser, groups: (cognitoUser?.signInUserSession?.accessToken?.payload?.['cognito:groups'] || [])})
   }, [JSON.stringify(user), !!cognitoUser])
 
 
