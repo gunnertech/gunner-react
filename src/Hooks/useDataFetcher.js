@@ -25,13 +25,11 @@ export default ({
 
   onItemsChange = items => null
 }) => {
-  // const test = useQuery(query, {
-  //   skip: !!skip,
-  //   // pollInterval: 5000,
-  //   variables
-  // });
-
-  // console.log("TEddST", test)
+  const test = useQuery(query, {
+    skip: !!skip,
+    // pollInterval: 5000,
+    variables
+  });
 
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
@@ -40,6 +38,8 @@ export default ({
     // pollInterval: 5000,
     variables
   });
+
+  console.log("TEddST", test)
 
 
   const entry = useSubscription(subscriptionCreateMutation, {
@@ -64,9 +64,15 @@ export default ({
 
   const memoizedItems = useMemo(() => items ?? [], [JSON.stringify(items)]);
 
+  // const memoizedItems = items ?? [];
+
   const handleItemsChange = useCallback(items => 
     onItemsChange(items)
   , [])
+
+  // const handleItemsChange = items => 
+  //   onItemsChange(items)
+  
 
   const clearResults = () => null
     // fetchMore({
@@ -96,6 +102,7 @@ export default ({
   const defaultLimit = 10;
 
   const handleRefresh = useCallback(limit => 
+    console.log("LIMIT", limit) ||
     fetchMore({
       query,
       variables: {
@@ -103,7 +110,7 @@ export default ({
         nextToken: null,
         limit: limit ?? variables.limit
       },
-      updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems }} }) => 
+      updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems = [] } = {}} = {} }) => 
       ({
         __typename,
         [dataKey]: {
@@ -111,7 +118,7 @@ export default ({
           nextToken,
           items: [
             ...newItems,
-            ...items.filter(item => !newItems.find(i => i.id === item.id)),
+            ...items.filter(item => !!item?.id && !newItems.filter(i => !!i?.id).find(i => i.id === item.id)),
           ]
         }
       })
@@ -119,16 +126,16 @@ export default ({
     .then(() => console.log("done loading new"))
   , [JSON.stringify(variables), nextToken])
 
-  const handleEndReached = useCallback(() =>
-    !nextToken ? (() => null)() : Promise.all([
+  const handleEndReached = useCallback(passedToken =>
+    !nextToken && !passedToken ? (() => null)() : Promise.all([
       setLoading(true),
       fetchMore({
         query,
         variables: {
           ...variables,
-          nextToken
+          nextToken: passedToken || nextToken
         },
-        updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {nextToken, items: newItems }} }) =>
+        updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {nextToken, items: newItems } = {}} = {} }) =>
         ({
           __typename,
           [dataKey]: {
@@ -209,8 +216,8 @@ export default ({
 
   // console.log(loading)
 
-  
+  console.log("LENGTH", memoizedItems?.length)
 
 
-  return !!skip ? {} : { objects: memoizedItems, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached, clearResults }
+  return !!skip ? {} : { objects: memoizedItems, nextToken, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached, clearResults }
 }

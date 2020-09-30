@@ -7,6 +7,7 @@ import { Button } from '@material-ui/core';
 export default ({
   loading, 
   hasMoreItems, 
+  nextToken,
   objects, 
   onEndReached, 
   RenderComponent, 
@@ -17,18 +18,21 @@ export default ({
   usedButton,
   forceMore
 }) => {
+  console.log("useButton", useButton)
   const handleEndReached = () => {
-    if ((window.innerHeight + window.scrollY - 50) >= document.body.offsetHeight) {
-      console.log("you're at the bottom of the page", !!hasMoreItems);
-      !!hasMoreItems && onEndReached()
+    // console.log((window.innerHeight + window.scrollY + 100), document.body.offsetHeight)
+    if ((window.innerHeight + window.scrollY + 100) >= document.body.offsetHeight) {
+      console.log("you're at the bottom of the page", nextToken);
+      onEndReached(nextToken)
     }
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', !!useButton || !!usedButton ? (() => null) : handleEndReached);
+    // console.log("OKOK", nextToken)
+    window.addEventListener('scroll', !!useButton ? (() => null) : handleEndReached);
 
     return () => window.removeEventListener('scroll', handleEndReached)
-  }, [!!useButton, !!usedButton])
+  }, [!!useButton, !!usedButton, nextToken])
 
   useEffect(() => {
     !!forceMore &&
@@ -81,7 +85,7 @@ export default ({
           variant="contained" 
           size="large" 
           color="secondary"
-          onClick={onEndReached}
+          onClick={() => onEndReached(nextToken)}
           disabled={!!loading}
         >
           {!!loading ? "Loading..." : "Load More"}

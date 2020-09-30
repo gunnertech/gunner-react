@@ -6,6 +6,8 @@ import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 import { AUTH_TYPE } from "aws-appsync";
 
 import { ApolloClient, createHttpLink, InMemoryCache, ApolloLink } from '@apollo/client';
+import AWSAppSyncClient from "aws-appsync";
+
 
 
 export default ({cognitoUser, appSyncConfig}) => {
@@ -48,10 +50,15 @@ export default ({cognitoUser, appSyncConfig}) => {
 
   const [appSyncClient, setAppSyncClient] = useState(null);
 
+  const client = new AWSAppSyncClient({
+    url: url,
+    region: region,
+    auth: !!cognitoUser ? cognitoAuth : iamAuth
+  });
+
   useEffect(() => {
-    console.log(cognitoUser === undefined ? null : !!cognitoUser ? "cognitoClient" : "iamClient")
-    console.log(cognitoUser === undefined ? null : !!cognitoUser ? cognitoClient : iamClient)
-    setAppSyncClient(cognitoUser === undefined ? null : !!cognitoUser ? cognitoClient : iamClient)
+    // setAppSyncClient(cognitoUser === undefined ? null : !!cognitoUser ? cognitoClient : iamClient)
+    setAppSyncClient(cognitoUser === undefined ? null : client)
     
     return () => setAppSyncClient(null)
   }, [JSON.stringify(cognitoUser)]);
