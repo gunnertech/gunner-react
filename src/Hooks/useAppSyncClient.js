@@ -53,7 +53,8 @@ export default ({cognitoUser, appSyncConfig}) => {
   const client = new AWSAppSyncClient({
     url: url,
     region: region,
-    auth: !!cognitoUser ? cognitoAuth : iamAuth
+    auth: !!cognitoUser ? cognitoAuth : iamAuth,
+    disableOffline: true
   });
 
   useEffect(() => {
