@@ -60,7 +60,8 @@ const InnerApp = ({
 }) => {
   const currentUser = useCurrentUser({cognitoUser, useNotificationPermissions, useFindUser, useCreateUser, useUpdateUser});
   
-  return useMemo(() => 
+  // return useMemo(() => 
+  return (
     <ActionSheetProvider>
       <CurrentUserProvider currentUser={currentUser}>
         <ThemeProvider theme={getElementsTheme({navTheme: scheme === 'dark' ? DarkTheme : DefaultTheme, scheme})}>
@@ -74,7 +75,8 @@ const InnerApp = ({
         </ThemeProvider>
       </CurrentUserProvider>
     </ActionSheetProvider>
-  , [JSON.stringify(currentUser)])
+  )
+  // , [JSON.stringify(currentUser)])
 }
 
 const App = ({
