@@ -39,8 +39,6 @@ export default ({
     variables
   });
 
-  console.log("TEddST", test)
-
 
   const entry = useSubscription(subscriptionCreateMutation, {
     skip: !subscriptionCreateMutation || !!skip,
