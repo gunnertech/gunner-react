@@ -77,7 +77,7 @@ const InnerApp = ({
   , [JSON.stringify(currentUser)])
 }
 
-export default ({
+const App = ({
   fonts, 
   initialState: passedInitialState, 
   getElementsTheme = args => args, 
@@ -208,3 +208,5 @@ export default ({
     </CognitoUserProvider>
   );
 }
+
+export default App
