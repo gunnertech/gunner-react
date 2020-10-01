@@ -89,7 +89,6 @@ export default ({cognitoUser, appSyncConfig}) => {
       ]),
     });
 
-    setAppSyncClient(cognitoUser === undefined ? null : !!cognitoUser ? cognitoClient : iamClient)
     setAppSyncClient(client)
     
     return () => setAppSyncClient(null)
