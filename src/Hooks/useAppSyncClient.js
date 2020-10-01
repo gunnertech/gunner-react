@@ -24,7 +24,9 @@ export default ({cognitoUser, appSyncConfig}) => {
   useEffect(() => {
     const url = appSyncConfig.aws_appsync_graphqlEndpoint;
     const region = appSyncConfig.aws_appsync_region;
-    const httpLink = createHttpLink({ uri: url });
+    const httpLink = new HttpLink({
+      uri: url,
+    });
 
     const iamAuth = {
       type: AUTH_TYPE.AWS_IAM, 
