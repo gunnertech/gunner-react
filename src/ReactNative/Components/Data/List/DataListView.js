@@ -17,7 +17,7 @@ export default ({onScroll, objects, loading, onRefresh, onEndReached, RenderComp
     onRefresh={onRefresh}
     keyExtractor={item => item.id}
     data={
-      objects.filter(uniqByProp('id')).slice().sort(clientSort ?? undefined).filter(clientFilter)
+      (objects??[]).filter(uniqByProp('id')).slice().sort(clientSort ?? undefined).filter(clientFilter)
     }
     onEndReached={onEndReached}
     renderItem={({item}) => 

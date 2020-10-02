@@ -68,7 +68,7 @@ export default ({
 
   const memoizedObjects = transform([
     ...prependedObjects, 
-    ...objects.filter(obj => !!obj?.id && !prependedObjects.find(po => !!po?.id && po.id === obj.id))
+    ...(objects??[]).filter(obj => !!obj?.id && !prependedObjects.find(po => !!po?.id && po.id === obj.id))
   ])
 
   useEffect(() => {
