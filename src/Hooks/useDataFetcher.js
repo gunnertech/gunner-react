@@ -25,11 +25,11 @@ export default ({
 
   onItemsChange = items => null
 }) => {
-  const test = useQuery(query, {
-    skip: !!skip,
-    // pollInterval: 5000,
-    variables
-  });
+  // const test = useQuery(query, {
+  //   skip: !!skip,
+  //   // pollInterval: 5000,
+  //   variables
+  // });
 
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
@@ -60,7 +60,7 @@ export default ({
   // console.log("UPDATED OB", updateEntry?.data)
 
 
-  const memoizedItems = useMemo(() => items ?? [], [JSON.stringify(items)]);
+  // const memoizedItems = useMemo(() => items ?? [], [JSON.stringify(items)]);
 
   // const memoizedItems = items ?? [];
 
@@ -100,7 +100,6 @@ export default ({
   const defaultLimit = 10;
 
   const handleRefresh = useCallback(limit => 
-    console.log("LIMIT", limit) ||
     fetchMore({
       query,
       variables: {
@@ -162,8 +161,8 @@ export default ({
   // }, [memoizedItems, nextToken, handleEndReached])
 
   useEffect(() => {
-    handleItemsChange(memoizedItems)
-  }, [handleItemsChange, memoizedItems])
+    handleItemsChange(items)
+  }, [handleItemsChange, items])
 
   useEffect(() => {
     setLoading(dumbLoading);
@@ -214,8 +213,8 @@ export default ({
 
   // console.log(loading)
 
-  console.log("LENGTH", memoizedItems?.length)
+  // console.log("LENGTH", items?.length)
 
 
-  return !!skip ? {} : { objects: memoizedItems, nextToken, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached, clearResults }
+  return !!skip ? {} : { objects: items, nextToken, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached, clearResults }
 }

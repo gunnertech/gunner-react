@@ -59,12 +59,17 @@ export default ({
 
   // console.log("DataListContaine", nextToken)
 
-  const memoizedObjects = useMemo(() => transform([
-      ...prependedObjects, 
-      ...objects.filter(obj => !!obj?.id && !prependedObjects.find(po => !!po?.id && po.id === obj.id))
-    ]), 
-    [JSON.stringify([...prependedObjects, ...objects])]
-  )
+  // const memoizedObjects = useMemo(() => transform([
+  //     ...prependedObjects, 
+  //     ...objects.filter(obj => !!obj?.id && !prependedObjects.find(po => !!po?.id && po.id === obj.id))
+  //   ]), 
+  //   [JSON.stringify([...prependedObjects, ...objects])]
+  // )
+
+  const memoizedObjects = transform([
+    ...prependedObjects, 
+    ...objects.filter(obj => !!obj?.id && !prependedObjects.find(po => !!po?.id && po.id === obj.id))
+  ])
 
   useEffect(() => {
     !!onLoading && onLoading(loading)
@@ -76,8 +81,8 @@ export default ({
 
   !!doClear && setTimeout(clearResults, 3000)
 
-  return useMemo(() =>
-  // return (
+  // return useMemo(() =>
+  return (
     <DataListView
       onScroll={onScroll}
       objects={memoizedObjects}
@@ -93,6 +98,6 @@ export default ({
       usedButton={usedButton}
       forceMore={forceMore}
     />
-  // )
-  , [memoizedObjects, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, useButton, forceMore, loading, clientFilter, nextToken])//, clientFilter, ])
+  )
+  // , [memoizedObjects, handleEndReached, handleRefresh, onCreateLoading, onUpdateLoading, useButton, forceMore, loading, clientFilter, nextToken])//, clientFilter, ])
 }
