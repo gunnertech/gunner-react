@@ -32,7 +32,7 @@ const AppearanceComponent = ({children}) => {
 
   StatusBar.setBarStyle(scheme === 'dark' ? 'light-content' : 'dark-content');
     
-
+ 
 
   useEffect(() => {
     const subscription = Appearance.addChangeListener(({ colorScheme }) => {

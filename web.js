@@ -2,8 +2,11 @@ module.exports = {
   App: require("./dist/React/App").default,
   
   DataList: require("./dist/React/Components/Data/List").default,
+  DataListNew: require("./dist/React/Components/Data/ListNew").default,
   DataTable: require("./dist/React/Components/Data/Table").default,
+  DataTableNew: require("./dist/React/Components/Data/TableNew").default,
   DataListView: require("./dist/React/Components/Data/List/DataListView").default,
+  DataLisNewView: require("./dist/React/Components/Data/ListNew/DataListNewView").default,
   Form: require("./dist/React/Components/Form").default,
   PhotoUpload: require("./dist/React/Components/PhotoUpload").default,
   Modal: require("./dist/React/Components/Modal").default,

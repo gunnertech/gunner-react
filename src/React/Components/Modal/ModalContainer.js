@@ -27,6 +27,7 @@ export default ({
     ButtonProps: {}
   },
   secondaryButton = null,
+  tertiaryButton = null,
 }) => {
   const classes = useStyles();
 
@@ -53,6 +54,7 @@ export default ({
       opened={opened}
       saveButton={saveButton}
       secondaryButton={secondaryButton}
+      tertiaryButton={tertiaryButton}
     />
   )
 }

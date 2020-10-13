@@ -59,8 +59,8 @@ export default ({
       onLoadMoreClick={() => setForceMore(forceMore => forceMore + 1)}
       forceMore={forceMore}
 
-      onLoaded={loaded => setLoaded(loaded)}
-      onLoading={loading => setLoading(loading)}
+      onLoaded={setLoaded}
+      onLoading={setLoading}
 
       loading={loading}
       loaded={loaded}

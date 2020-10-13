@@ -36,6 +36,7 @@ const Modal = ({
     ButtonProps: {}
   },
   secondaryButton = null,
+  tertiaryButton = null,
 }) =>
   <Dialog
     className={classes.modal}
@@ -120,6 +121,19 @@ const Modal = ({
                 {...secondaryButton.ButtonProps||{}}
               >
                 {secondaryButton.text}
+              </Button>
+            }
+            {
+              !!tertiaryButton &&
+              <Button 
+                disabled={tertiaryButton.disabled} 
+                variant={(tertiaryButton.ButtonProps||{}).variant || 'text'}
+                color={(tertiaryButton.ButtonProps||{}).color || 'default'}
+                size={(tertiaryButton.ButtonProps||{}).size || 'large'}
+                onClick={evt => [evt.stopPropagation(), evt.preventDefault(), tertiaryButton.onClick()]}
+                {...tertiaryButton.ButtonProps||{}}
+              >
+                {tertiaryButton.text}
               </Button>
             }
           </>

@@ -19,6 +19,7 @@ const AppBar = React.createContext({
 
 const AppBarProvider = ({children}) => {
   const [title, setTitle] = useState("");
+  const [backButtonVisible, setBackButtonVisible] = useState(false);
   const [onClickHelp, setOnClickHelp] = useState(null);
   const [rightButtons, setRightButtons] = useState([])
   const reset = () => [
@@ -37,7 +38,9 @@ const AppBarProvider = ({children}) => {
         setOnClickHelp,
         rightButtons,
         setRightButtons,
-        reset
+        reset,
+        backButtonVisible,
+        setBackButtonVisible
       }}
     >
       {children}
