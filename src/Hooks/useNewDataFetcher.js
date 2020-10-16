@@ -69,7 +69,7 @@ export default ({
   // console.log("ENTRY", entry)
   
 
-  const {refetch, fetchMore, error, loading, data: {[query.dataKey]: {nextToken, items} = {}} = {}} = useQuery(query.query, {
+  const {refetch, fetchMore, error, loading, data: {[query.dataKey ?? "key"]: {nextToken, items} = {}} = {}} = useQuery(query.query, {
     variables: {
       ...(query.variables ?? {}),
       // nextToken: token
@@ -106,7 +106,7 @@ export default ({
           ...prev,
           [query.dataKey]: {
             ...prev[query.dataKey],
-            nextToken: fetchMoreResult[query.dataKey]?.nextToken,
+            nextToken: fetchMoreResult[query.dataKey??"key"]?.nextToken,
             items: [
               ...(prev[query.dataKey].items??[]),
               ...(fetchMoreResult[query.dataKey]?.items??[]).filter(item => !(prev[query.dataKey].items??[]).find(i => i.id === item.id))
