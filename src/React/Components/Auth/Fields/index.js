@@ -404,7 +404,7 @@ const CustomField = ({customField, value, onValueChange, onValidChange, error, s
           />
         ) : (
           <TextField
-            InputLabelProps={{shrink: true}}
+            InputLabelProps={{shrink: true, style: {visibility: customField.type === 'hidden' ? 'hidden' : 'visible'}}}
             required={!!customField.required}
             type={customField.type || 'text'}
             onChange={({target: {value}}) => onValueChange(value)}
