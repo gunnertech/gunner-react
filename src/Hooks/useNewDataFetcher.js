@@ -108,7 +108,7 @@ export default ({
             ...prev[query.dataKey],
             nextToken: fetchMoreResult[query.dataKey??"key"]?.nextToken,
             items: [
-              ...(prev[query.dataKey].items??[]),
+              ...(prev[query.dataKey]?.items??[]),
               ...(fetchMoreResult[query.dataKey]?.items??[]).filter(item => !(prev[query.dataKey].items??[]).find(i => i.id === item.id))
             ]
           }  
