@@ -69,13 +69,22 @@ export default ({
   // console.log("ENTRY", entry)
   
 
-  const {refetch, fetchMore, error, loading, data: {[query.dataKey ?? "key"]: {nextToken, items} = {}} = {}} = useQuery(query.query, {
+  const entry = useQuery(query.query, {
     variables: {
       ...(query.variables ?? {}),
       // nextToken: token
     },
     notifyOnNetworkStatusChange: true,
   });
+
+  const refetch = entry?.refetch;
+  const fetchMore = entry?.fetchMore;
+  const error = entry?.error;
+  const loading = entry?.loading;
+  const data = entry?.data;
+  const nextToken = data?.[query.dataKey ?? "key"]?.nextToken;
+  const items = data?.[query.dataKey ?? "key"]?.items;
+
 
   !!error && console.log("FETCH ERROR", error)
 
