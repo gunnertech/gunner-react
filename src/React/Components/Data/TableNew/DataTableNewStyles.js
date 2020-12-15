@@ -7,7 +7,7 @@ export default makeStyles(theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 650,
+    // minWidth: 650,
   },
   tableCellNoWrap: {
     whiteSpace: 'nowrap',
