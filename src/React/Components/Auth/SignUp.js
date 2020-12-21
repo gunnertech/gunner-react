@@ -100,7 +100,7 @@ const SignUp = ({
       .catch(err => [
         console.log(err),
         setLoading(false),
-        window.alert(/failed with error/.test(err.message) ? error.message.split("failed with error")[1] : err.message)
+        window.alert(/failed with error/.test(err.message) ? err.message.split("failed with error")[1] : err.message)
       ])
   }, [loading])
 
