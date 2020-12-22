@@ -145,6 +145,7 @@ export default ({
                   <PhotoUpload 
                     onUpload={photoUrl => handleChange(key, {target: {value: photoUrl}})}
                     photoUrl={!!value.value ? value.value(data[key] || "") : (data[key] || "")}
+                    buttonText={value.label}
                   />
                   <FormHelperText component={'div'}>{dirties.includes(key) && !fields[key].regex.test(data[key]) ? (value.errorMessage || "") : (value.helperText || "")}</FormHelperText>
                 </FormControl>

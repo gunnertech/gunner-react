@@ -73,7 +73,7 @@ const reducer = (state, action) => {
   }
 }
 
-const PhotoUpload = ({onUpload, onRead, photoUrl, doPrompt, skipCrop}) => {
+const PhotoUpload = ({onUpload, onRead, photoUrl, doPrompt, skipCrop, buttonText}) => {
   const inputEl = useRef(null);
   const [state, dispatch] = useReducer(reducer, {...initialState, photoUrl});
   const [crop, setCrop] = useState({ unit: '%', x: 0, width: 100, height: 100, y: 0 });
@@ -200,7 +200,7 @@ const PhotoUpload = ({onUpload, onRead, photoUrl, doPrompt, skipCrop}) => {
           variant={'contained'} 
           color="secondary" 
           onClick={() => inputEl.current.click()}
-        >Select Logo</Button>
+        >{buttonText ?? "Select Logo"}</Button>
       }
       
     </>
