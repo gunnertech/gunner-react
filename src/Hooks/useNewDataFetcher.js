@@ -77,7 +77,7 @@ export default ({
     notifyOnNetworkStatusChange: true,
   });
 
-  console.log(entry)
+  // console.log(entry)
 
   const refetch = entry?.refetch;
   const fetchMore = entry?.fetchMore;

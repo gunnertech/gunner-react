@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -11,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import NumberFormat from 'react-number-format';
 import MaskedInput from 'react-text-mask';
+import { DateTimePicker } from '@material-ui/pickers';
  
 import PhotoUpload from '../PhotoUpload'
 import { Box } from '@material-ui/core';
@@ -98,8 +100,8 @@ export default ({
   const [isValid, setIsValid] = useState(false);
   const [dirties, setDirties] = useState([]);
   
-  const handleChange = (field, {target: {value, checked}}) => [
-    onChange(field, value),
+  const handleChange = (field, {target: {value, checked}}, obj) => [
+    obj?.type === "percentage" ? onChange(field, value / 100.0) : onChange(field, value),
     setDirties([
       ...dirties,
       field
@@ -138,9 +140,37 @@ export default ({
     <Box component={!!isNested ? 'div' : "form"} className={classes.container} noValidate autoComplete="off">
       {
         Object.entries(fields).map(([key, value], i) =>
+          console.log(value.overrides) ||
           <Box key={i} hidden={value.type === 'hidden'}>
             {
-              value.type === 'media' ? (
+              value.type === 'datetime' ? (
+                <DateTimePicker 
+                  disabled={value.disabled}
+                  clearable
+                  disablePast
+                  className="formControl"
+                  fullWidth
+                  label={value.label}
+                  onChange={value => handleChange(key, {target: {value: value.toDate()}})}
+                  value={!!value.value ? value.value(data[key] || "") : (data[key] === null || data[key] === undefined ? "" : data[key])}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  variant="dialog"
+                  inputVariant="outlined"
+                  helperText={
+                    (!data[key] && !value.required ? (
+                      false
+                    ) : !dirties.includes(key) ? (
+                      false
+                    ) : !!value.customValidator ? (
+                      !value.customValidator(data[key])
+                    ) : (
+                      !fields[key].regex.test(data[key])
+                    )) ? (value.errorMessage || "") : (value.helperText || "")
+                  }
+                />
+              ) : value.type === 'media' ? (
                 <FormControl key={i} fullWidth>
                   <PhotoUpload 
                     onUpload={photoUrl => handleChange(key, {target: {value: photoUrl}})}
@@ -196,7 +226,7 @@ export default ({
                       !fields[key].regex.test(data[key])
                     )) ? (value.errorMessage || "") : (value.helperText || "")
                   }
-                  onChange={handleChange.bind(null, key)}
+                  onChange={evt => handleChange(key, evt, value)}
                   label={value.label}
                   value={!!value.value ? value.value(data[key] || "") : (data[key] === null || data[key] === undefined ? "" : data[key])}
                   placeholder={value.placeholder || ""}
@@ -211,6 +241,10 @@ export default ({
                     {
                       inputComponent: NumberFormatCustom,
                     }
+                  ) : value.type === 'percentage' ? (
+                    {
+                      endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                    }
                   ) : value.type === 'phone' ? (
                     {
                       inputComponent: PhoneFormatCustom,
@@ -220,7 +254,8 @@ export default ({
                       
                     }
                   )
-                  }
+                  } 
+                  {...(value.overrides ?? {})}
                 >
                   {
                     (value.options||[]).map((option, i) => 
