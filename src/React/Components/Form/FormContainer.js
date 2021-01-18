@@ -140,7 +140,6 @@ export default ({
     <Box component={!!isNested ? 'div' : "form"} className={classes.container} noValidate autoComplete="off">
       {
         Object.entries(fields).map(([key, value], i) =>
-          console.log(value.overrides) ||
           <Box key={i} hidden={value.type === 'hidden'}>
             {
               value.type === 'datetime' ? (
