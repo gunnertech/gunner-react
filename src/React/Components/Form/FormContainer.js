@@ -152,7 +152,6 @@ export default ({
                   label={value.label}
                   onChange={value => handleChange(key, {target: {value: !value ? null : value.toDate()}})}
                   value={
-                    console.log("HI THERE", !!value.value ? value.value(data[key] || "") : (data[key] === null || data[key] === undefined ? "" : data[key])) ||
                     !!value.value ? value.value(data[key] || "") : (data[key] === null || data[key] === undefined ? "" : data[key])
                   }
                   InputLabelProps={{
