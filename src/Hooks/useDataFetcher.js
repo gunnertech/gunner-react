@@ -23,8 +23,6 @@ export default ({
   dataKey,
   skip,
 
-  pollInterval,
-
   onItemsChange = items => null
 }) => {
   // const test = useQuery(query, {
@@ -37,7 +35,7 @@ export default ({
   const client = useApolloClient();
   const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
     skip: !!skip,
-    pollInterval,
+    // pollInterval: 5000,
     variables
   });
 

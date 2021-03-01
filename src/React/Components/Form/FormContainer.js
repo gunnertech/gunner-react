@@ -150,7 +150,7 @@ export default ({
                   className="formControl"
                   fullWidth
                   label={value.label}
-                  onChange={value => handleChange(key, {target: {value: value.toDate()}})}
+                  onChange={value => handleChange(key, {target: {value: !value ? null : value.toDate()}})}
                   value={!!value.value ? value.value(data[key] || "") : (data[key] === null || data[key] === undefined ? "" : data[key])}
                   InputLabelProps={{
                     shrink: true
