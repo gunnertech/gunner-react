@@ -8,7 +8,7 @@ const defaultSort = undefined;
 
 export default ({
   fields, 
-  dataListParams
+  dataListParams,
 }) => {
   const classes = useStyles();
   const [orderBy, setOrderBy] = useState(null);

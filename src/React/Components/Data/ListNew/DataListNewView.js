@@ -6,11 +6,11 @@ import { Button } from '@material-ui/core';
 export default ({
   items,
   nextToken,
-  setToken,
+  // setToken,
   refreshing,
-  loadNew,
-  clearResults,
-  refetch,
+  // loadNew,
+  // clearResults,
+  // refetch,
   loadMore,
   useButton,
   RenderComponent,
@@ -18,10 +18,12 @@ export default ({
   buttonProps
 }) => {
 
+  console.log("useButton", useButton)
+
   const handleEndReached = useCallback(() => {
     // console.log((window.innerHeight + window.scrollY + 100), document.body.offsetHeight)
     if ((window.innerHeight + window.scrollY + 100) >= document.body.offsetHeight) {
-      console.log("you're at the bottom of the page", nextToken);
+      // console.log("you're at the bottom of the page", nextToken);
       loadMore()
     }
   }, [loadMore, nextToken])

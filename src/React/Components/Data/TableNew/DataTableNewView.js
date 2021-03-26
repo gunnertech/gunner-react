@@ -46,7 +46,6 @@ export default ({
         <TableBody>
           <DataList 
             {...dataListParams}
-            useButton={false}
           />
         </TableBody>
       </Table>

@@ -38,8 +38,6 @@ export default ({
     !!forceMore &&
     onEndReached()
   }, [forceMore])
-
-  console.log("RENDERING")
   
   return (
     <>
