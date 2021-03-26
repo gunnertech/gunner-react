@@ -45,6 +45,8 @@ export default ({
         </TableHead>
         <TableBody>
           <DataList 
+            useButton={!!dataListParams?.useButton}
+            skipAutoLoad={!!dataListParams?.useButton}
             {...dataListParams}
           />
         </TableBody>

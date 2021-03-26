@@ -34,7 +34,8 @@ export default ({
   useButton,
   RenderComponent,
   viewVariables = defaultViewVariables,
-  buttonProps = defaultButtonProps
+  buttonProps = defaultButtonProps,
+  skipAutoLoad
 }) => {
   const results = useDataFetcher({
     pollInterval,
@@ -59,6 +60,7 @@ export default ({
     <DataListView
       RenderComponent={RenderComponent}
       useButton={useButton}
+      skipAutoLoad={skipAutoLoad}
       viewVariables={viewVariables}
       buttonProps={buttonProps}
       {...results}

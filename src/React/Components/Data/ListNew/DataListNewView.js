@@ -6,6 +6,7 @@ import { Button } from '@material-ui/core';
 export default ({
   items,
   nextToken,
+  skipAutoLoad,
   // setToken,
   refreshing,
   // loadNew,
@@ -17,9 +18,6 @@ export default ({
   viewVariables,
   buttonProps
 }) => {
-
-  console.log("useButton", useButton)
-
   const handleEndReached = useCallback(() => {
     // console.log((window.innerHeight + window.scrollY + 100), document.body.offsetHeight)
     if ((window.innerHeight + window.scrollY + 100) >= document.body.offsetHeight) {
@@ -29,10 +27,10 @@ export default ({
   }, [loadMore, nextToken])
 
   useEffect(() => {
-    window.addEventListener('scroll', !!useButton ? (() => null) : handleEndReached);
+    window.addEventListener('scroll', !!useButton || !!skipAutoLoad ? (() => null) : handleEndReached);
 
     return () => window.removeEventListener('scroll', handleEndReached)
-  }, [!!useButton, nextToken])
+  }, [!!useButton, nextToken, skipAutoLoad])
   
   return (
     <>
@@ -67,6 +65,7 @@ export default ({
       {
         !!useButton &&
         !!nextToken &&
+        !skipAutoLoad &&
         <Button 
           fullWidth 
           variant="contained" 
