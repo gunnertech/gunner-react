@@ -206,7 +206,7 @@ const UsernameField = ({disabled = false, value, usernameField, onValueChange, o
             margin="normal"
             fullWidth
             error={!!error || (!isValid && !!value)}
-            helperText={(error || "").replace(/User is disabled/, "Account has been disabled")}
+            helperText={(error || "").replace(/User is disabled/, "Account has been disabled").replace("Incorrect username or password", "Your password has expired. Please click the Reset Password link below")}
             variant="outlined"
           />
         )

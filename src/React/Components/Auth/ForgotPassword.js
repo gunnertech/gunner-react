@@ -19,13 +19,15 @@ const ForgotPassword = ({
   usernameField = "email",
   order=['username', 'code', 'password'],
 }) => {
+  const passedEmail = (new URL(window.location.href)).searchParams.get("email");
   const [loading, setLoading] = useState(false);
-  const [codeValue, setCodeValue] = useState("");
+  const [codeValue, setCodeValue] = useState((new URL(window.location.href)).searchParams.get("resetCode"));
   const [codeValid, setCodeValid] = useState(false);
-  const [submittingRequest, setSubmittingRequest] = useState(false);
+  const [submittingRequest, setSubmittingRequest] = useState(!!passedEmail);
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordValid, setPasswordValid] = useState(false);
-  const [usernameValue, setUsernameValue] = useState(initialUsernameValue);
+  const [usernameValue, setUsernameValue] = useState(passedEmail ?? initialUsernameValue);
+  const doSubmitRequest = !passedEmail;
   const [usernameError, setUsernameError] = useState("");
   const [usernameValid, setUsernameValid] = useState(false);
   const [codeError, setCodeError] = useState("");
@@ -74,6 +76,7 @@ const ForgotPassword = ({
 
   useEffect(() => {
     !!submittingRequest &&
+    !!doSubmitRequest &&
     Auth.forgotPassword(usernameValue)
       .then(() => [
         setUsernameError("")
@@ -82,7 +85,7 @@ const ForgotPassword = ({
         setSubmittingRequest(false),
         setUsernameError(e.message)
       ])
-  }, [submittingRequest]);
+  }, [submittingRequest, doSubmitRequest ]);
 
   useEffect(() => {
     !!loading &&
@@ -102,7 +105,7 @@ const ForgotPassword = ({
     <form noValidate autoComplete="off">
       {
         order
-        .filter(slug => submittingRequest ? slug !== 'username' : !['code', 'password'].includes(slug) )
+        .filter(slug => !!submittingRequest ? slug !== 'username' : !['code', 'password'].includes(slug) )
         .map(slug => 
           slug === 'code' ? (
             <CodeField 
@@ -166,15 +169,21 @@ const ForgotPassword = ({
         onClick={() => !submittingRequest ? setSubmittingRequest(true) : setLoading(true) }
       >
         {
-          submittingRequest ? (
+          !!submittingRequest ? (
             'Submit'
           ) : (
-            'Request Code'
+            'Send Code'
           )
         }
       </Button>
+      
       {
-        submittingRequest &&
+        !submittingRequest &&
+        <Typography paragraph>Please enter the email address associated with your account. A 6-digit code will be emailed to you immediately. When you receive it, please enter that code on the next page.</Typography>
+      }
+
+      {
+        !!submittingRequest &&
         <Typography align="center" variant="overline">
           No code?
           &nbsp;

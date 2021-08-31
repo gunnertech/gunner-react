@@ -113,7 +113,14 @@ const Auth = ({
   }
 }) => {
   const routeAuthState = !!location ? (location.pathname||"").replace(/\W/g, "") : "";
-  const [authState, setAuthState] = useState(['signin','signup'].includes(routeAuthState) ? routeAuthState : initialAuthState)//useState(queryString.parse(location.search).authState || initialAuthState);
+  const [authState, setAuthState] = useState(
+    !!(new URL(window.location.href)).searchParams.get("resetCode") ? (
+      "forgotpassword"
+    ) : ['signin','signup'].includes(routeAuthState) ? (
+      routeAuthState
+   ) : (
+     initialAuthState
+  ))//useState(queryString.parse(location.search).authState || initialAuthState);
   const [message, setMessage] = useState({});
   const [authData, setAuthData] = useState({});
   const [values, setValues] = useState({
