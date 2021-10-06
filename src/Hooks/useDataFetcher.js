@@ -48,7 +48,8 @@ export default ({
   const nextToken = data?.[dataKey]?.nextToken
   const items = Array.isArray(data?.[dataKey]) ? data?.[dataKey] : data?.[dataKey]?.items
 
-  console.log("LOOK", JSON.stringify(items), JSON.stringify(data))
+  console.log("ITEMS", JSON.stringify(items))
+  console.log("DATA", JSON.stringify(data))
 
 
   const entry = useSubscription(subscriptionCreateMutation, {
