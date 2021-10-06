@@ -39,7 +39,7 @@ export default ({
   //   variables
   // });
 
-  const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
+  const {refetch, fetchMore, loading: dumbLoading, error, data} = useQuery(query, {
     skip: !!skip,
     // pollInterval: 5000,
     variables
