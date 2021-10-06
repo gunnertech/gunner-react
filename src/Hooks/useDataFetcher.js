@@ -33,23 +33,11 @@ export default ({
 
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
-  // const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
-  //   skip: !!skip,
-  //   // pollInterval: 5000,
-  //   variables
-  // });
-
-  const {refetch, fetchMore, loading: dumbLoading, error, data} = useQuery(query, {
+  const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
     skip: !!skip,
     // pollInterval: 5000,
     variables
   });
-
-  const nextToken = data?.[dataKey]?.nextToken
-  const items = Array.isArray(data?.[dataKey]) ? data?.[dataKey] : data?.[dataKey]?.items
-
-  console.log("ITEMS", JSON.stringify(items))
-  console.log("DATA", JSON.stringify(data))
 
 
   const entry = useSubscription(subscriptionCreateMutation, {
