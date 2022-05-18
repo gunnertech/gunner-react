@@ -2,7 +2,6 @@ import { useEffect, useMemo, useCallback, useState } from "react";
 import { useQuery, useSubscription } from "@apollo/client";
 import useInterval from "./useInterval";
 import { useApolloClient } from "@apollo/client"
-import gql from "graphql-tag";
 
 export default ({
   mockData = [], 
@@ -32,28 +31,9 @@ export default ({
   //   variables
   // });
 
-  const query1 = gql`
-    query ListSportsbooks(
-      $filter: ModelSportsbookFilterInput
-      $limit: Int
-      $nextToken: String
-    ) {
-      listSportsbooks(filter: $filter, limit: $limit, nextToken: $nextToken) {
-        items {
-          id
-          createdAt
-          updatedAt
-          name
-          active
-        }
-        nextToken
-      }
-    }
-  `
-
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
-  console.log("QUERY", query1);
+  console.log("QUERY222222", query);
   // const entry = useQuery(query1, {
   //   skip: !!skip,
   //   // pollInterval: 5000,
