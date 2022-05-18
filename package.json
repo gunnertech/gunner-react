@@ -1,6 +1,6 @@
 {
   "name": "gunner-react",
-  "version": "1.1.77",
+  "version": "1.1.78",
   "description": "Shared Components, Hooks, Contexts, Utils and more, common across Gunner's React and React Native projects",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -23,26 +23,7 @@
   "author": "cody swann",
   "license": "ISC",
   "peerDependencies": {
-    "@apollo/client": "^3.4.17",
-    "@expo/react-native-action-sheet": "*",
-    "graphql": "^15.0.0",
-    "graphql-tag": "^2.10.3",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-ga": "*",
-    "aws-appsync": "*",
-    "aws-appsync-subscription-link": "*",
-    "aws-appsync-auth-link": "*",
-    "aws-amplify": "*",
-    "@sentry/browser": "*",
-    "@material-ui/core": "*",
-    "@material-ui/pickers": "*",
-    "@date-io/moment": "*",
-    "react-number-format": "*",
-    "react-text-mask": "*",
-    "react-image-crop": "*",
-    "uuid-v4": "*",
-    "react-helmet": "*"
+    
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -59,8 +40,5 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.1.0"
-  },
-  "dependencies": {
-    "flatlist-react": "^1.4.2"
   }
 }
