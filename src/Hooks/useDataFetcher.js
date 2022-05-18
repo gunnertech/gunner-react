@@ -56,9 +56,10 @@ export default ({
   console.log("MY QU", query1);
   console.log("VARS", variables);
   const entry2 = useQuery(query1, {
+    skip: !!skip,
     variables
   });
-  console.log("ENTRUY22 AGAIN", entry2)
+  console.log("ENTRUY22 AGAIN skip: !!skip,", entry2)
   // const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
   //   skip: !!skip,
   //   // pollInterval: 5000,
