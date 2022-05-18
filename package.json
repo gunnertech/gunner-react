@@ -1,6 +1,6 @@
 {
   "name": "gunner-react",
-  "version": "1.1.75",
+  "version": "1.1.76",
   "description": "Shared Components, Hooks, Contexts, Utils and more, common across Gunner's React and React Native projects",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -25,7 +25,8 @@
   "peerDependencies": {
     "@apollo/client": "^3.4.17",
     "@expo/react-native-action-sheet": "*",
-    "graphql": "*",
+    "graphql": "^15.0.0",
+    "graphql-tag": "^2.10.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-ga": "*",
