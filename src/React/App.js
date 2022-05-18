@@ -56,8 +56,10 @@ export default ({
   useNotificationPermissions,
   sentryConfig
 }) => {
+  console.log("1")
   const [cognitoUser, setCognitoUser] = useState(undefined);
   const appsyncClient = useAppSyncClient({cognitoUser, appSyncConfig: amplifyConfig});
+  console.log("2")
   
   
 
