@@ -54,12 +54,12 @@ export default ({
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   console.log("QUERY222222", query1);
-  const entry = useQuery(query1, {
+  const entry2 = useQuery(query1, {
     skip: !!skip,
     // pollInterval: 5000,
     variables
   });
-  console.log("ENTRUY", entry)
+  console.log("ENTRUY", entry2)
   const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
     skip: !!skip,
     // pollInterval: 5000,
@@ -205,7 +205,7 @@ export default ({
   //       },
   //     }
   //   })
-  // }, [JSON.stringify(variables), dataKey])
+  // }, [JSON.stringify(variables), dataKey]) 
 
   useEffect(() => {
     (newObject?.id || updatedObject?.id) &&
