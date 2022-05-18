@@ -53,13 +53,9 @@ export default ({
 
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
-  console.log("QUERY222222", query1);
-  const entry2 = useQuery(query1, {
-    skip: !!skip,
-    // pollInterval: 5000,
-    variables
-  });
-  console.log("ENTRUY", entry2)
+  console.log("MY QU", query1);
+  const entry2 = useQuery(query1);
+  console.log("ENTRUY22", entry2)
   // const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
   //   skip: !!skip,
   //   // pollInterval: 5000,
