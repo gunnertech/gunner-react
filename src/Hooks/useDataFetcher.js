@@ -54,6 +54,7 @@ export default ({
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
   console.log("MY QU", query1);
+  console.log("VARS", variables);
   const entry2 = useQuery(query1);
   console.log("ENTRUY22", entry2)
   // const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
