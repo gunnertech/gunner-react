@@ -60,190 +60,190 @@ export default ({
     variables
   });
   console.log("ENTRUY", entry2)
-  const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
-    skip: !!skip,
-    // pollInterval: 5000,
-    variables
-  });
+  // const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
+  //   skip: !!skip,
+  //   // pollInterval: 5000,
+  //   variables
+  // });
 
 
-  const entry = useSubscription(subscriptionCreateMutation, {
-    skip: !subscriptionCreateMutation || !!skip,
-    variables: subscriptionCreateVariables
-  })
-  const newObject = !subscriptionCreateDataKey ? null : entry?.data?.[subscriptionCreateDataKey];
-  const onCreateLoading = false; //!!entry?.loading;
+  // const entry = useSubscription(subscriptionCreateMutation, {
+  //   skip: !subscriptionCreateMutation || !!skip,
+  //   variables: subscriptionCreateVariables
+  // })
+  // const newObject = !subscriptionCreateDataKey ? null : entry?.data?.[subscriptionCreateDataKey];
+  // const onCreateLoading = false; //!!entry?.loading;
 
-  // console.log("ENTRY", entry)
+  // // console.log("ENTRY", entry)
 
-  const updateEntry = useSubscription(subscriptionUpdateMutation, {
-    skip: !subscriptionUpdateMutation || !!skip,
-    variables: subscriptionUpdateVariables
-  })
-  const updatedObject = !subscriptionUpdateDataKey ? null : updateEntry?.data?.[subscriptionUpdateDataKey];
-  const onUpdateLoading = !!updateEntry?.loading;
+  // const updateEntry = useSubscription(subscriptionUpdateMutation, {
+  //   skip: !subscriptionUpdateMutation || !!skip,
+  //   variables: subscriptionUpdateVariables
+  // })
+  // const updatedObject = !subscriptionUpdateDataKey ? null : updateEntry?.data?.[subscriptionUpdateDataKey];
+  // const onUpdateLoading = !!updateEntry?.loading;
 
-  // console.log("NEW OB", entry?.data)
-  // console.log("UPDATED OB", updateEntry?.data)
+  // // console.log("NEW OB", entry?.data)
+  // // console.log("UPDATED OB", updateEntry?.data)
 
 
-  // const memoizedItems = useMemo(() => items ?? [], [JSON.stringify(items)]);
+  // // const memoizedItems = useMemo(() => items ?? [], [JSON.stringify(items)]);
 
-  // const memoizedItems = items ?? [];
+  // // const memoizedItems = items ?? [];
 
-  const handleItemsChange = useCallback(items => 
-    onItemsChange(items)
-  , [])
-
-  // const handleItemsChange = items => 
+  // const handleItemsChange = useCallback(items => 
   //   onItemsChange(items)
+  // , [])
+
+  // // const handleItemsChange = items => 
+  // //   onItemsChange(items)
   
 
-  const clearResults = () => null
-    // fetchMore({
-    //   query,
-    //   variables: {
-    //     ...variables,
-    //     nextToken: null,
-    //     limit: variables.limit
-    //   },
-    //   // updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems }} }) => 
-    //   updateQuery: (resp, resp2) => 
-    //   console.log("resp", resp, resp2)
-    // })
-    // //   !!__typename &&
-    // //   ({
-    // //     __typename,
-    // //     [dataKey]: {
-    // //       __typename: connectionTypename,
-    // //       nextToken,
-    // //       items: [
-    // //         ...newItems,
-    // //       ]
-    // //     }
-    // //   })
-    // // })
+  // const clearResults = () => null
+  //   // fetchMore({
+  //   //   query,
+  //   //   variables: {
+  //   //     ...variables,
+  //   //     nextToken: null,
+  //   //     limit: variables.limit
+  //   //   },
+  //   //   // updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems }} }) => 
+  //   //   updateQuery: (resp, resp2) => 
+  //   //   console.log("resp", resp, resp2)
+  //   // })
+  //   // //   !!__typename &&
+  //   // //   ({
+  //   // //     __typename,
+  //   // //     [dataKey]: {
+  //   // //       __typename: connectionTypename,
+  //   // //       nextToken,
+  //   // //       items: [
+  //   // //         ...newItems,
+  //   // //       ]
+  //   // //     }
+  //   // //   })
+  //   // // })
 
-  const defaultLimit = 10;
+  // const defaultLimit = 10;
 
-  const handleRefresh = useCallback(limit => 
-    fetchMore({
-      query,
-      variables: {
-        ...variables,
-        nextToken: null,
-        limit: limit ?? variables.limit
-      },
-      updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems = [] } = {}} = {} }) => 
-      ({
-        __typename,
-        [dataKey]: {
-          __typename: connectionTypename,
-          nextToken,
-          items: [
-            ...newItems,
-            ...items.filter(item => !!item?.id && !newItems.filter(i => !!i?.id).find(i => i.id === item.id)),
-          ]
-        }
-      })
-    })
-    .then(() => console.log("done loading new"))
-  , [JSON.stringify(variables), nextToken])
+  // const handleRefresh = useCallback(limit => 
+  //   fetchMore({
+  //     query,
+  //     variables: {
+  //       ...variables,
+  //       nextToken: null,
+  //       limit: limit ?? variables.limit
+  //     },
+  //     updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems = [] } = {}} = {} }) => 
+  //     ({
+  //       __typename,
+  //       [dataKey]: {
+  //         __typename: connectionTypename,
+  //         nextToken,
+  //         items: [
+  //           ...newItems,
+  //           ...items.filter(item => !!item?.id && !newItems.filter(i => !!i?.id).find(i => i.id === item.id)),
+  //         ]
+  //       }
+  //     })
+  //   })
+  //   .then(() => console.log("done loading new"))
+  // , [JSON.stringify(variables), nextToken])
 
-  const handleEndReached = useCallback(passedToken =>
-    !nextToken && !passedToken ? (() => null)() : Promise.all([
-      setLoading(true),
-      fetchMore({
-        query,
-        variables: {
-          ...variables,
-          nextToken: passedToken || nextToken
-        },
-        updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {nextToken, items: newItems } = {}} = {} }) =>
-        ({
-          __typename,
-          [dataKey]: {
-            __typename: connectionTypename,
-            nextToken,
-            items: [
-              ...items,
-              ...newItems.filter(item => !items.find(i => i.id === item.id))
-            ]
-          }
-        })
-      })
-      .then(() => console.log("done loading more") || setLoading(false))
-    ])
-  , [nextToken, JSON.stringify(variables)])
+  // const handleEndReached = useCallback(passedToken =>
+  //   !nextToken && !passedToken ? (() => null)() : Promise.all([
+  //     setLoading(true),
+  //     fetchMore({
+  //       query,
+  //       variables: {
+  //         ...variables,
+  //         nextToken: passedToken || nextToken
+  //       },
+  //       updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {nextToken, items: newItems } = {}} = {} }) =>
+  //       ({
+  //         __typename,
+  //         [dataKey]: {
+  //           __typename: connectionTypename,
+  //           nextToken,
+  //           items: [
+  //             ...items,
+  //             ...newItems.filter(item => !items.find(i => i.id === item.id))
+  //           ]
+  //         }
+  //       })
+  //     })
+  //     .then(() => console.log("done loading more") || setLoading(false))
+  //   ])
+  // , [nextToken, JSON.stringify(variables)])
 
-  useInterval(() => 
-    !!items && handleRefresh(Math.max(items.length, variables.limit ?? defaultLimit))
-  , !!noPoll ? 40000000 : 5000);
+  // useInterval(() => 
+  //   !!items && handleRefresh(Math.max(items.length, variables.limit ?? defaultLimit))
+  // , !!noPoll ? 40000000 : 5000);
+
+  // // useEffect(() => {
+  // //   // console.log(memoizedItems?.length, !!nextToken)
+  // //   !!nextToken && 
+  // //   !memoizedItems?.length &&
+  // //   handleEndReached()
+  // // }, [memoizedItems, nextToken, handleEndReached])
 
   // useEffect(() => {
-  //   // console.log(memoizedItems?.length, !!nextToken)
-  //   !!nextToken && 
-  //   !memoizedItems?.length &&
-  //   handleEndReached()
-  // }, [memoizedItems, nextToken, handleEndReached])
+  //   handleItemsChange(items)
+  // }, [handleItemsChange, items])
 
-  useEffect(() => {
-    handleItemsChange(items)
-  }, [handleItemsChange, items])
+  // useEffect(() => {
+  //   setLoading(dumbLoading);
+  // }, [dumbLoading])
 
-  useEffect(() => {
-    setLoading(dumbLoading);
-  }, [dumbLoading])
+  // // useEffect(() => { NOTE: Turned this off because it was causing a refetch of the data everytime
+  // //   client.writeQuery({
+  // //     query,
+  // //     data: {
+  // //       [dataKey]: {
+  // //         nextToken: null,
+  // //         items: [],
+  // //       },
+  // //     }
+  // //   })
+  // // }, [JSON.stringify(variables), dataKey]) 
 
-  // useEffect(() => { NOTE: Turned this off because it was causing a refetch of the data everytime
-  //   client.writeQuery({
-  //     query,
-  //     data: {
-  //       [dataKey]: {
-  //         nextToken: null,
-  //         items: [],
-  //       },
+  // useEffect(() => {
+  //   (newObject?.id || updatedObject?.id) &&
+  //   !!subscriptionUpdateQuery &&
+  //   client.query({
+  //     query: subscriptionUpdateQuery,
+  //     variables: {
+  //       id: (newObject?.id || updatedObject?.id)
   //     }
   //   })
-  // }, [JSON.stringify(variables), dataKey]) 
-
-  useEffect(() => {
-    (newObject?.id || updatedObject?.id) &&
-    !!subscriptionUpdateQuery &&
-    client.query({
-      query: subscriptionUpdateQuery,
-      variables: {
-        id: (newObject?.id || updatedObject?.id)
-      }
-    })
-  }, [subscriptionUpdateQuery, newObject?.id, updatedObject?.id])
+  // }, [subscriptionUpdateQuery, newObject?.id, updatedObject?.id])
 
 
-  useEffect(() => {
-    (newObject?.id || updatedObject?.id) &&
-    handleRefresh()
-  }, [handleRefresh, newObject?.id, updatedObject?.id])
+  // useEffect(() => {
+  //   (newObject?.id || updatedObject?.id) &&
+  //   handleRefresh()
+  // }, [handleRefresh, newObject?.id, updatedObject?.id])
 
-  useEffect(() => {
-    // refetch({nextToken: null})
-    !!doFreshLoad &&
-    refetch({nextToken: null})
-  }, [doFreshLoad])
+  // useEffect(() => {
+  //   // refetch({nextToken: null})
+  //   !!doFreshLoad &&
+  //   refetch({nextToken: null})
+  // }, [doFreshLoad])
 
-  useEffect(() => {
-    !!fetchAll &&
-    !!nextToken &&
-    handleEndReached()
-  }, [fetchAll, nextToken])
+  // useEffect(() => {
+  //   !!fetchAll &&
+  //   !!nextToken &&
+  //   handleEndReached()
+  // }, [fetchAll, nextToken])
 
-  !!error && console.log(error)
+  // !!error && console.log(error)
 
-  // console.log(loading)
+  // // console.log(loading)
 
-  // console.log("LENGTH", items?.length)
+  // // console.log("LENGTH", items?.length)
 
 
-  return !!skip ? {} : { objects: items, nextToken, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached, clearResults }
+  // return !!skip ? {} : { objects: items, nextToken, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached, clearResults }
 
-  // return {}
+  return {}
 }
