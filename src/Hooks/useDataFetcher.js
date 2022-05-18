@@ -2,7 +2,6 @@ import { useEffect, useMemo, useCallback, useState } from "react";
 import { useQuery, useSubscription } from "@apollo/client";
 import useInterval from "./useInterval";
 import { useApolloClient } from "@apollo/client"
-import gql from "graphql-tag";
 
 export default ({
   mockData = [], 
@@ -32,39 +31,14 @@ export default ({
   //   variables
   // });
 
-  const query1 = gql`
-    query ListSportsbooks(
-      $filter: ModelSportsbookFilterInput
-      $limit: Int
-      $nextToken: String
-    ) {
-      listSportsbooks(filter: $filter, limit: $limit, nextToken: $nextToken) {
-        items {
-          id
-          createdAt
-          updatedAt
-          name
-          active
-        }
-        nextToken
-      }
-    }
-  `
 
   const [loading, setLoading] = useState(false);
   const client = useApolloClient();
-  console.log("MY QU", query1);
-  console.log("VARS", variables);
-  const entry2 = useQuery(query1, {
+  const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
     skip: !!skip,
+    // pollInterval: 5000,
     variables
   });
-  console.log("ENTRUY22 AGAIN skip: !!skip,", entry2)
-  // const {refetch, fetchMore, loading: dumbLoading, error, data: {[dataKey]: {nextToken, items} = {}} = {}} = useQuery(query, {
-  //   skip: !!skip,
-  //   // pollInterval: 5000,
-  //   variables
-  // });
 
 
   // const entry = useSubscription(subscriptionCreateMutation, {
@@ -91,15 +65,15 @@ export default ({
 
   // // const memoizedItems = items ?? [];
 
-  // const handleItemsChange = useCallback(items => 
-  //   onItemsChange(items)
-  // , [])
+  const handleItemsChange = useCallback(items => 
+    onItemsChange(items)
+  , [])
 
   // // const handleItemsChange = items => 
   // //   onItemsChange(items)
   
 
-  // const clearResults = () => null
+  const clearResults = () => null
   //   // fetchMore({
   //   //   query,
   //   //   variables: {
@@ -124,61 +98,61 @@ export default ({
   //   // //   })
   //   // // })
 
-  // const defaultLimit = 10;
+  const defaultLimit = 10;
 
-  // const handleRefresh = useCallback(limit => 
-  //   fetchMore({
-  //     query,
-  //     variables: {
-  //       ...variables,
-  //       nextToken: null,
-  //       limit: limit ?? variables.limit
-  //     },
-  //     updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems = [] } = {}} = {} }) => 
-  //     ({
-  //       __typename,
-  //       [dataKey]: {
-  //         __typename: connectionTypename,
-  //         nextToken,
-  //         items: [
-  //           ...newItems,
-  //           ...items.filter(item => !!item?.id && !newItems.filter(i => !!i?.id).find(i => i.id === item.id)),
-  //         ]
-  //       }
-  //     })
-  //   })
-  //   .then(() => console.log("done loading new"))
-  // , [JSON.stringify(variables), nextToken])
+  const handleRefresh = useCallback(limit => 
+    fetchMore({
+      query,
+      variables: {
+        ...variables,
+        nextToken: null,
+        limit: limit ?? variables.limit
+      },
+      updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {items: newItems = [] } = {}} = {} }) => 
+      ({
+        __typename,
+        [dataKey]: {
+          __typename: connectionTypename,
+          nextToken,
+          items: [
+            ...newItems,
+            ...items.filter(item => !!item?.id && !newItems.filter(i => !!i?.id).find(i => i.id === item.id)),
+          ]
+        }
+      })
+    })
+    .then(() => console.log("done loading new"))
+  , [JSON.stringify(variables), nextToken])
 
-  // const handleEndReached = useCallback(passedToken =>
-  //   !nextToken && !passedToken ? (() => null)() : Promise.all([
-  //     setLoading(true),
-  //     fetchMore({
-  //       query,
-  //       variables: {
-  //         ...variables,
-  //         nextToken: passedToken || nextToken
-  //       },
-  //       updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {nextToken, items: newItems } = {}} = {} }) =>
-  //       ({
-  //         __typename,
-  //         [dataKey]: {
-  //           __typename: connectionTypename,
-  //           nextToken,
-  //           items: [
-  //             ...items,
-  //             ...newItems.filter(item => !items.find(i => i.id === item.id))
-  //           ]
-  //         }
-  //       })
-  //     })
-  //     .then(() => console.log("done loading more") || setLoading(false))
-  //   ])
-  // , [nextToken, JSON.stringify(variables)])
+  const handleEndReached = useCallback(passedToken =>
+    !nextToken && !passedToken ? (() => null)() : Promise.all([
+      setLoading(true),
+      fetchMore({
+        query,
+        variables: {
+          ...variables,
+          nextToken: passedToken || nextToken
+        },
+        updateQuery: ({__typename, [dataKey]: {__typename: connectionTypename, items = [] } = {}} = {}, { fetchMoreResult: {[dataKey]: {nextToken, items: newItems } = {}} = {} }) =>
+        ({
+          __typename,
+          [dataKey]: {
+            __typename: connectionTypename,
+            nextToken,
+            items: [
+              ...items,
+              ...newItems.filter(item => !items.find(i => i.id === item.id))
+            ]
+          }
+        })
+      })
+      .then(() => console.log("done loading more") || setLoading(false))
+    ])
+  , [nextToken, JSON.stringify(variables)])
 
-  // useInterval(() => 
-  //   !!items && handleRefresh(Math.max(items.length, variables.limit ?? defaultLimit))
-  // , !!noPoll ? 40000000 : 5000);
+  useInterval(() => 
+    !!items && handleRefresh(Math.max(items.length, variables.limit ?? defaultLimit))
+  , !!noPoll ? 40000000 : 5000);
 
   // // useEffect(() => {
   // //   // console.log(memoizedItems?.length, !!nextToken)
@@ -187,13 +161,13 @@ export default ({
   // //   handleEndReached()
   // // }, [memoizedItems, nextToken, handleEndReached])
 
-  // useEffect(() => {
-  //   handleItemsChange(items)
-  // }, [handleItemsChange, items])
+  useEffect(() => {
+    handleItemsChange(items)
+  }, [handleItemsChange, items])
 
-  // useEffect(() => {
-  //   setLoading(dumbLoading);
-  // }, [dumbLoading])
+  useEffect(() => {
+    setLoading(dumbLoading);
+  }, [dumbLoading])
 
   // // useEffect(() => { NOTE: Turned this off because it was causing a refetch of the data everytime
   // //   client.writeQuery({
@@ -224,26 +198,26 @@ export default ({
   //   handleRefresh()
   // }, [handleRefresh, newObject?.id, updatedObject?.id])
 
-  // useEffect(() => {
-  //   // refetch({nextToken: null})
-  //   !!doFreshLoad &&
-  //   refetch({nextToken: null})
-  // }, [doFreshLoad])
+  useEffect(() => {
+    // refetch({nextToken: null})
+    !!doFreshLoad &&
+    refetch({nextToken: null})
+  }, [doFreshLoad])
 
-  // useEffect(() => {
-  //   !!fetchAll &&
-  //   !!nextToken &&
-  //   handleEndReached()
-  // }, [fetchAll, nextToken])
+  useEffect(() => {
+    !!fetchAll &&
+    !!nextToken &&
+    handleEndReached()
+  }, [fetchAll, nextToken])
 
-  // !!error && console.log(error)
+  !!error && console.log(error)
 
   // // console.log(loading)
 
   // // console.log("LENGTH", items?.length)
 
 
-  // return !!skip ? {} : { objects: items, nextToken, loading: !!fetchAll ? !!nextToken || !!loading : loading, onUpdateLoading, onCreateLoading, error, nextToken, refetch, handleRefresh, handleEndReached, clearResults }
+  return !!skip ? {} : { objects: items, nextToken, loading: !!fetchAll ? !!nextToken || !!loading : loading, error, nextToken, refetch, handleRefresh, handleEndReached, clearResults, /* onUpdateLoading, onCreateLoading,*/  }
 
-  return {}
+  // return {}
 }
