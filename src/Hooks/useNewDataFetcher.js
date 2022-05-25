@@ -186,15 +186,15 @@ export default ({
   //     ,
   //   ])
 
-  // const {data: {[onUpdateQuery?.dataKey ?? "onUpdateQueryData"]: onUpdateItem} = {}} = useSubscription(onUpdateQuery?.query, {
-  //   skip: !onUpdateQuery?.query,
-  //   variables: onUpdateQuery?.variables
-  // })
+  const {data: {[onUpdateQuery?.dataKey ?? "onUpdateQueryData"]: onUpdateItem} = {}} = !onUpdateQuery?.query ? {} : useSubscription(onUpdateQuery?.query, {
+    skip: !onUpdateQuery?.query,
+    variables: onUpdateQuery?.variables
+  })
 
-  // const {data: {[onCreateQuery?.dataKey ?? "onCreateQueryData"]: onCreateItem} = {}} = useSubscription(onCreateQuery?.query, {
-  //   skip: !onCreateQuery?.query,
-  //   variables: onCreateQuery?.variables
-  // })
+  const {data: {[onCreateQuery?.dataKey ?? "onCreateQueryData"]: onCreateItem} = {}} = !onCreateQuery?.query ? {} : useSubscription(onCreateQuery?.query, {
+    skip: !onCreateQuery?.query,
+    variables: onCreateQuery?.variables
+  })
 
   const replaceItem = useCallback(item => {
     const data = client.readQuery({
