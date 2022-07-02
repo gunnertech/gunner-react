@@ -9,6 +9,50 @@ import { ApolloClient, from, gql, HttpLink, InMemoryCache, split } from "@apollo
 // import AWSAppSyncClient from "aws-appsync";
 
 
+const defaultPagination = (additionalKeyArgs = []) => ({
+  // merge(existing, incoming, { readField, variables }) {
+  //   const items = existing ? { ...existing.items } : {};
+  //   incoming?.items?.forEach?.(item => {
+  //     items[readField("id", item)] = item;
+  //   });
+  //   return !!variables?.nextToken ? {
+  //     ...incoming,
+  //     items,
+  //   } : {
+  //     items,
+  //     ...incoming,
+  //   };
+  // },
+
+  // read(existing) {
+  //   if (existing) {
+  //     return {
+  //       ...existing,
+  //       items: Object.values(existing.items),
+  //     };
+  //   }
+  // },
+  keyArgs: [...["type", "filter"], ...additionalKeyArgs],
+  merge(existing, incoming, { readField }) {
+    const items = existing?.items ? { ...existing.items } : {};
+    (incoming?.items ?? []).forEach(item => {
+      items[readField("id", item)] = item;
+    });
+    return {
+      nextToken: incoming?.nextToken,
+      items,
+    };
+  },
+
+  read(existing) {
+    if (existing) {
+      return {
+        nextToken: existing.nextToken,
+        items: Object.values(existing.items),
+      };
+    }
+  },
+});
 
 export default ({cognitoUser, appSyncConfig}) => {
   const [appSyncClient, setAppSyncClient] = useState(null);
@@ -61,9 +105,23 @@ export default ({cognitoUser, appSyncConfig}) => {
     // })
 
     const auth = !!cognitoUser ? cognitoAuth : iamAuth;
+
+    const cache = new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            listListings: defaultPagination(),
+            searchListingsRaw: defaultPagination(),
+            searchListings: defaultPagination(),
+            listEventsByIsActive: defaultPagination(),
+            listTicketsByIsSettledAndResult: defaultPagination(["isSettled"]),
+          },
+        },
+      },
+    });
     
     const client = isSignedIn === undefined ? null : new ApolloClient({
-      cache: new InMemoryCache(),
+      cache,
       link: from([
         createAuthLink({
           url,
