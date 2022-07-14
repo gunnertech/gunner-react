@@ -110,6 +110,7 @@ export default ({cognitoUser, appSyncConfig}) => {
       typePolicies: {
         Query: {
           fields: {
+            listBetsByResult: defaultPagination(),
             listListings: defaultPagination(),
             searchListingsRaw: defaultPagination(),
             searchListings: defaultPagination(),
